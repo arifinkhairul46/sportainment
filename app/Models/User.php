@@ -24,6 +24,10 @@ class User extends Authenticatable
         'google_id',
         'no_hp'
     ];
+    protected $primaryKey = 'id';
+    protected $table = 'users';
+
+
 
     /**
      * The attributes that should be hidden for serialization.

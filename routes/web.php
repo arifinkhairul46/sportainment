@@ -19,7 +19,12 @@ require __DIR__ . '/auth.php';
 Route::get('/', function () {
     return view('index');
 });
-
+Route::get('/profile', function () {
+    return view('profile');
+});
+Route::get('/order', function () {
+    return view('order');
+});
 //login google
 Route::controller(GoogleController::class)->group(function () {
     Route::get('/auth/google', 'redirectToGoogle')->name('auth.google');

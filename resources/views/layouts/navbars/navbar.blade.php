@@ -17,8 +17,8 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link bg-secondary text-white px-3 dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i>{{' Hi, '}}{{ auth()->user()->name}}</a>
                     <div class="dropdown-menu m-0">
-                        <a href="#" class="dropdown-item">Profile</a>
-                        <a href="#" class="dropdown-item">Orders</a>
+                        <a href="/profile" class="dropdown-item">Profile</a>
+                        <a href="/order" class="dropdown-item">Orders</a>
                         <div class="dropdown-divider"></div>
                         <form role="form" method="POST" action="{{ route('logout') }}" id="logout-form">
                             @csrf

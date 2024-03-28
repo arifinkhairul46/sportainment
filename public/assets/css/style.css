@@ -120,6 +120,12 @@ h6,
   transition: .5s;
 }
 
+.nav-menu a {
+  color: #000;
+  background: var(--grey) !important;
+  font-weight: bold;
+}
+
 .sticky-top.navbar-light .navbar-nav .nav-link {
   padding: 20px 0;
 }

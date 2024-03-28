@@ -60,8 +60,8 @@
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.3s" src="assets/img/about-us.jpg" style="object-fit: cover;">
+                    <div class="h-100">
+                        <img class="w-100 h-100 rounded wow zoomIn" data-wow-delay="0.3s" src="assets/img/about-us.jpg" style="object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-lg-7">
