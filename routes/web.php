@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +27,17 @@ Route::get('/profile', function () {
 Route::get('/order', function () {
     return view('order');
 });
+
+
+
 //login google
 Route::controller(GoogleController::class)->group(function () {
     Route::get('/auth/google', 'redirectToGoogle')->name('auth.google');
     Route::get('/auth/google/callback', 'handleGoogleCallback');
+});
+
+Route::prefix('admin')->group(function () {
+    // Route::get('absensi', [DashboardController::class, 'index'])->('dashboard.absensi');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard.absensi');
+    Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel');
 });

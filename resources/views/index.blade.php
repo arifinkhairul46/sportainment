@@ -26,7 +26,7 @@
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase animated bounceInDown">Top Scorer</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">TO The Final Match</h1>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">To The Final Match</h1>
                         </div>
                     </div>
                 </div>
@@ -166,78 +166,89 @@
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 75px;">
         <div class="container">
             <div class="text-center mx-auto mb-5" style="max-width: 600px;">
-                <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Pricing Plan</h5>
-                <h1 class="display-5 mb-0">Pricing Plan For CCTV Security Services</h1>
+                <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Booking</h5>
             </div>
             <div class="row g-5">
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
                     <div class="position-relative border border-primary rounded">
                         <div class="bg-primary text-center pt-5 pb-4">
-                            <h3 class="text-white">Basic Plan</h3>
-                            <h1 class="display-4 text-white">
-                                <small class="align-top"
-                                    style="font-size: 22px; line-height: 45px;">$</small>49<small
-                                    class="align-bottom" style="font-size: 16px; line-height: 40px;">/
-                                    Mo</small>
-                            </h1>
+                            <h3 class="text-white">Calendar</h3>
                         </div>
-                        <div class="text-center py-5">
-                            <p class="border-bottom border-light mb-2 pb-2">HTML5 & CSS3</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Bootstrap v5</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Responsive Layout</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Browsers Compatibility</p>
-                            <p class="mb-2 pb-2">Easy to Use</p>
-                        </div>
-                        <a href="" class="btn btn-primary py-2 px-4 position-absolute top-100 start-50 translate-middle">Order Now</a>
+                        
+                        <a href="#" class="btn btn-primary py-2 px-4 position-absolute top-100 start-50 translate-middle">Order Now</a>
                     </div>
                 </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="position-relative border border-secondary rounded">
-                        <div class="bg-secondary text-center pt-5 pb-4">
-                            <h3 class="text-white">Standard Plan</h3>
-                            <h1 class="display-4 text-white">
-                                <small class="align-top"
-                                    style="font-size: 22px; line-height: 45px;">$</small>49<small
-                                    class="align-bottom" style="font-size: 16px; line-height: 40px;">/
-                                    Mo</small>
-                            </h1>
-                        </div>
-                        <div class="text-center py-5">
-                            <p class="border-bottom border-light mb-2 pb-2">HTML5 & CSS3</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Bootstrap v5</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Responsive Layout</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Browsers Compatibility</p>
-                            <p class="mb-2 pb-2">Easy to Use</p>
-                        </div>
-                        <a href="" class="btn btn-secondary py-2 px-4 position-absolute top-100 start-50 translate-middle">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
-                    <div class="position-relative border border-primary rounded">
-                        <div class="bg-primary text-center pt-5 pb-4">
-                            <h3 class="text-white">Extended Plan</h3>
-                            <h1 class="display-4 text-white">
-                                <small class="align-top"
-                                    style="font-size: 22px; line-height: 45px;">$</small>49<small
-                                    class="align-bottom" style="font-size: 16px; line-height: 40px;">/
-                                    Mo</small>
-                            </h1>
-                        </div>
-                        <div class="text-center py-5">
-                            <p class="border-bottom border-light mb-2 pb-2">HTML5 & CSS3</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Bootstrap v5</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Responsive Layout</p>
-                            <p class="border-bottom border-light mb-2 pb-2">Browsers Compatibility</p>
-                            <p class="mb-2 pb-2">Easy to Use</p>
-                        </div>
-                        <a href="" class="btn btn-primary py-2 px-4 position-absolute top-100 start-50 translate-middle">Order Now</a>
-                    </div>
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
+                    <table class="table text-center" style="vertical-align:middle;font-size:13px;">
+                        <thead class="text-start">
+                            <tr><th colspan="4">
+                                <h6 class="resDate">Sabtu, 25 Mei 2024</h6>
+                            </th>
+                        </tr></thead>
+                        <tbody class="jadwal">
+                            <tr>
+                                <td class="col-md-3 col-6">Sesi 1 <br> <span>06.00 - 08.00</span> <h6 class="price_mobile">Rp 700.000</h6></td>
+                                <td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td>
+                                <td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250001','2024-05-25',1)" fdprocessedid="5eplfq"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3 col-6">Sesi 2 <br> <span>08.00 - 10.00</span> <h6 class="price_mobile">Rp 700.000</h6></td>
+                                <td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td>
+                                <td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250002','2024-05-25',2)" fdprocessedid="j161i"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr class="table-primary"><td class="col-md-3 col-6">Sesi 3 <br> <span>10.00 - 12.00</span></td><td colspan="3" class="text-start col-md-9 col-6">B3</td></tr><tr><td class="col-md-3 col-6">Sesi 4 <br> <span>12.00 - 14.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250004','2024-05-25',4)" fdprocessedid="pdn8m9"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 5 <br> <span>14.00 - 16.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250005','2024-05-25',5)" fdprocessedid="lrsh1r"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 6 <br> <span>16.00 - 18.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250006','2024-05-25',6)" fdprocessedid="jwdm5"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 7 <br> <span>18.00 - 20.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250007','2024-05-25',7)" fdprocessedid="32tle9"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 8 <br> <span>20.00 - 22.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250008','2024-05-25',8)" fdprocessedid="kvh8wq"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
     <!-- Pricing Plan End -->
 
+     <!-- Artikel Start -->
+     <div class="container-fluid py-3 wow fadeInUp" data-wow-delay="0.1s" id="artikel">
+        <div class="container">
+            <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+                <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Artikel</h5>
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5 mb-lg-0" >
+                    <div class="mb-4">
+                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
+                    </div>
+                    <p style="font-size: 10px"> Author </p>
+                    <p style="font-size: 10px"> Date </p>
+                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
+                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
+                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
+                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
+                    </p> 
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
+                    </div>
+                    <p style="font-size: 10px"> Author </p>
+                    <p style="font-size: 10px"> Date </p>
+                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
+                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
+                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
+                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
+                    </p> 
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-4">
+                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
+                    </div>
+                    <p style="font-size: 10px"> Author </p>
+                    <p style="font-size: 10px"> Date </p>
+                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
+                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
+                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
+                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
+                    </p> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Artikel End -->
 
     <!-- Contact Start -->
     <div class="container-fluid my-5" id="contact">

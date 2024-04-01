@@ -25,14 +25,17 @@ class UserController extends Controller
 
             $user  = User::where('email', $request->email)->first();
 
-            if ($user) {
+            if ($user->is_admin == '0') {
                 if (Hash::check($request->password, $user->password)) {
                     $request->session()->regenerate();
 
                     Auth::login($user);
 
                     return redirect()->intended('/');
-                }
+                } 
+            } else {
+                Auth::login($user);
+                return redirect()->intended('admin/dashboard');
             }
 
             return redirect("login")->withSuccess('Login details are not valid');
