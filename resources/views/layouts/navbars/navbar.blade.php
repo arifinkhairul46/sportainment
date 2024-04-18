@@ -11,7 +11,7 @@
             <a href="/" class="nav-item nav-link active">Home</a>
             <a href="#about" class="nav-item nav-link">About</a>
             <a href="#category" class="nav-item nav-link">Category</a>
-            <a href="#" class="nav-item nav-link">Booking</a>
+            <a href="#booking" class="nav-item nav-link">Booking</a>
             <a href="#contact" class="nav-item nav-link">Contact</a>
             @if (Auth::check())
                 <div class="nav-item dropdown">

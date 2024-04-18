@@ -162,45 +162,87 @@
     <!-- Gallery End -->
 
 
-    <!-- Pricing Plan Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 75px;">
+    <!-- Booking Start -->
+    <div class="container-fluid pt-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 50px;" id="booking">
         <div class="container">
             <div class="text-center mx-auto mb-5" style="max-width: 600px;">
                 <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Booking</h5>
             </div>
             <div class="row g-5">
                 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-                    <div class="position-relative border border-primary rounded">
-                        <div class="bg-primary text-center pt-5 pb-4">
+                    <div class="position-relative">
+                        <div class="bg-primary text-center py-2 mb-2">
                             <h3 class="text-white">Calendar</h3>
                         </div>
-                        
-                        <a href="#" class="btn btn-primary py-2 px-4 position-absolute top-100 start-50 translate-middle">Order Now</a>
+                        <div id="calendar"></div>
                     </div>
                 </div>
                 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
-                    <table class="table text-center" style="vertical-align:middle;font-size:13px;">
-                        <thead class="text-start">
-                            <tr><th colspan="4">
-                                <h6 class="resDate">Sabtu, 25 Mei 2024</h6>
-                            </th>
-                        </tr></thead>
-                        <tbody class="jadwal">
-                            <tr>
-                                <td class="col-md-3 col-6">Sesi 1 <br> <span>06.00 - 08.00</span> <h6 class="price_mobile">Rp 700.000</h6></td>
-                                <td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td>
-                                <td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250001','2024-05-25',1)" fdprocessedid="5eplfq"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-3 col-6">Sesi 2 <br> <span>08.00 - 10.00</span> <h6 class="price_mobile">Rp 700.000</h6></td>
-                                <td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td>
-                                <td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250002','2024-05-25',2)" fdprocessedid="j161i"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr class="table-primary"><td class="col-md-3 col-6">Sesi 3 <br> <span>10.00 - 12.00</span></td><td colspan="3" class="text-start col-md-9 col-6">B3</td></tr><tr><td class="col-md-3 col-6">Sesi 4 <br> <span>12.00 - 14.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250004','2024-05-25',4)" fdprocessedid="pdn8m9"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 5 <br> <span>14.00 - 16.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250005','2024-05-25',5)" fdprocessedid="lrsh1r"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 6 <br> <span>16.00 - 18.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250006','2024-05-25',6)" fdprocessedid="jwdm5"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 7 <br> <span>18.00 - 20.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250007','2024-05-25',7)" fdprocessedid="32tle9"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr><tr><td class="col-md-3 col-6">Sesi 8 <br> <span>20.00 - 22.00</span> <h6 class="price_mobile">Rp 700.000</h6></td><td class="name text-start col-md-3 col-6">TERSEDIA</td><td class="price col-md-3 col-6">Rp 700.000</td><td class="text-start col-md-3 col-6"><h6 class="name_mobile">TERSEDIA</h6> <button class="btn btn-sm btn-primary text-xs" onclick="booking('GCA202405250008','2024-05-25',8)" fdprocessedid="kvh8wq"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now</button></td></tr></tbody>
-                    </table>
+                    @foreach ($list_lapangan as $lapang)                        
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="heading-{{$lapang->id}}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{$lapang->id}}" aria-expanded="true" aria-controls="collapse-{{$lapang->id}}">
+                              {{$lapang->nama}}
+                            </button>
+                          </h2>
+                          <div id="collapse-{{$lapang->id}}" class="accordion-collapse collapse" aria-labelledby="heading-{{$lapang->id}}" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <table class="table text-center" style="vertical-align:middle;font-size:13px;">
+                                    <thead class="text-start">
+                                        <tr><th colspan="4">
+                                            <input type="hidden" id="isWeekend" name="isWeekend" class="isWeekend">
+                                            <h6 class="resDate"></h6>
+                                        </th>
+                                    </tr></thead>
+                                    <tbody class="jadwal">
+                                        @foreach ($sesi as $item)
+                                        <tr>
+                                            <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
+                                            <td class="col-md-3 col-6"></td>
+                                            <td class="price col-md-3 col-6"> 
+                                            <b class="price-weekday" style="display: none">
+                                                @if  ($item->sesi < 10 )
+                                                Rp {{number_format($lapang->harga_weekday_perjam_1)}}
+                                                @else
+                                                Rp {{number_format($lapang->harga_weekday_perjam_2)}}
+                                                @endif
+                                            </b>
+                                            <b class="price-weekend" style="display: none">
+                                                @if ($item->sesi < 10 )
+                                                Rp {{number_format($lapang->harga_weekend_perjam_1)}}
+                                                @else
+                                                Rp {{number_format($lapang->harga_weekend_perjam_2)}}
+                                                @endif
+                                            </b>
+                                            </td>
+                                            <td class="col-md-3 col-6">
+                                                
+                                                @if (Auth::check())
+                                                <a href="#" onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}' )" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</a>
+                                                @else
+                                                <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    <div class="mt-3 checkout" id="checkout"> 
+                      <a href="/cart" class="btn btn-primary form-control">
+                          <i class="fas fa-shopping-cart" aria-hidden="true"></i> Checkout
+                      </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Pricing Plan End -->
+    <!-- Booking End -->
 
      <!-- Artikel Start -->
      <div class="container-fluid py-3 wow fadeInUp" data-wow-delay="0.1s" id="artikel">
@@ -209,42 +251,17 @@
                 <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Artikel</h5>
             </div>
             <div class="row gx-5">
+                @foreach ($artikel_show as $item)                
                 <div class="col-lg-4 mb-5 mb-lg-0" >
                     <div class="mb-4">
-                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
+                        <img data-wow-delay="0.3s" src="{{asset($item->image)}}" width="400">
                     </div>
-                    <p style="font-size: 10px"> Author </p>
-                    <p style="font-size: 10px"> Date </p>
-                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
-                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
-                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
-                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
-                    </p> 
+                    <p style="font-size: 10px"> {{$item->upload_by}} </p>
+                    <p style="font-size: 10px"> {{date('d-m-Y', strtotime($item->created_at))}} </p>
+                    <p class="title-artikel"><b> {{$item->judul}} </b></p>
+                    <p class="mb-4" style="text-align: justify"> {{$item->isi_artikel}} </p> 
                 </div>
-                <div class="col-lg-4">
-                    <div class="mb-4">
-                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
-                    </div>
-                    <p style="font-size: 10px"> Author </p>
-                    <p style="font-size: 10px"> Date </p>
-                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
-                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
-                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
-                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
-                    </p> 
-                </div>
-                <div class="col-lg-4">
-                    <div class="mb-4">
-                        <img data-wow-delay="0.3s" src="assets/img/basketball_equip_1.png" width="300">
-                    </div>
-                    <p style="font-size: 10px"> Author </p>
-                    <p style="font-size: 10px"> Date </p>
-                    <p class="title-artikel"><b> Lorem ipsum dolor sit amet</b></p>
-                    <p class="mb-4" style="text-align: justify">Sportainment Rabbani Arena adalah arena olahraga multifungsi yang berada di Kota Bandung, Jawa Barat.
-                        Sportainment Arena menyediakan lapangan untuk Futsal, Basket, Badminton, Tenis Meja, Lempar Pisau hingga Panahan.
-                        Sportainment Arena juga dapat digunakan untuk kegiatan seminar, workshop, dan acara lainnya.
-                    </p> 
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -287,5 +304,84 @@
      <!-- JavaScript Libraries -->
      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="{{asset ('admin/plugins/fullcalendar/locales/id.js')}}"></script>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, 
+          {
+            locale: 'id',
+            initialView: 'dayGridMonth',
+            dateClick: function (info) {
+                moment.locale('id');
+                var dateSelected = moment(info.dateStr).format('dddd, Do MMMM YYYY');
+
+                var dayOfWeek = (info.date).getDay();
+                var isWeekend = (dayOfWeek === 0) || (dayOfWeek === 6)
+                
+                $('.isWeekend').val(isWeekend);
+                if(!isWeekend){
+                    $('.price-weekend').hide();
+                    $('.price-weekday').show();
+                } else {
+                    $('.price-weekend').show();
+                    $('.price-weekday').hide();
+                }
+                
+                $('.resDate').html(dateSelected );
+
+
+            }
+        });
+        calendar.render();
+        
+    });
+
+    function generate_id_booking (lapang, sesi, tanggal) {
+        const today = new Date();
+        const number = +1;
+
+        if (number < 10) {
+            temp = "00" 
+        } else if (number < 100) {
+            temp = "0"
+        } else {
+            temp = ""
+        }
+        
+        const id_booking = "SAR" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + lapang + sesi + temp + number;
+
+        return id_booking
+
+    }
+
+    function addToCart (id_lapang, id_sesi) {
+
+        const id_booking = generate_id_booking( id_lapang, id_sesi, $('.resDate').text());
+        // console.log(id_booking);
+        const isWeekend = $('.isWeekend').val();
+        const price = $('.price').val();
+        console.log(isWeekend);
+
+        const data = {
+            id_lapang: id_lapang,
+            id_sesi: id_sesi,
+            id_booking: id_booking,
+            tanggal: $('.resDate').text(),
+            price: price
+        }
+
+        // $.ajax({
+        //     url: '/cart/add',
+        //     type: 'POST',
+        //     data: data,
+        //     success: function (response) {
+        //         console.log(response);
+        //     }
+        // })
+
+    }
+  
+      </script>
 
 @endsection

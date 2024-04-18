@@ -26,14 +26,14 @@
 
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css?d=<?php echo date('YmdHis') ?>" rel="stylesheet">
+
+    {{-- calendar --}}
+    <link rel="stylesheet" href="admin/plugins/fullcalendar/main.css">
 </head>
 
 
 <body>
-    <div class="">
-        <header>
-        </header>
-
+    <div>
         <nav>
             @if (Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
                 @include('layouts.navbars.no_menu')
@@ -48,10 +48,14 @@
       
         <script src="assets/js/main.js"></script>
         <script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
+        <!-- fullCalendar 2.2.5 -->
+        <script src="{{asset ('admin/plugins/moment/moment-with-locales.min.js')}}"></script>
+        <script src="{{asset ('admin/plugins/fullcalendar/main.js')}}"></script>
+        <script src="{{asset ('admin/plugins/fullcalendar/locales-all.js')}}"></script>
+        <script src="{{asset ('admin/plugins/fullcalendar/locales-all.min.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/noframework.waypoints.min.js" integrity="sha512-wSIyQnPXWUgUNlSYdZKmOt99+I9FPAW7kJHIzUM5VhSDmROIwVmB4s+i/9p1YliZIAcKqdEgUOhOwO8u4piaaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </div>
-    {{-- @include('layouts.footer.footer') --}}
 </body>
 </html>

@@ -48,7 +48,7 @@ class ArtikelController extends Controller
      */
     public function show(Artikel $artikel)
     {
-        //
+       //
     }
 
     /**
