@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,19 +21,16 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . '/auth.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/booking/{id_sesi}', [HomeController::class, 'addToCart'])->name('addToCart');
+Route::get('/booking/{id_lapang}/{id_sesi}', [HomeController::class, 'addToCart'])->name('addToCart');
 
+Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+Route::post('cart', [HomeController::class, 'checkout'])->name('checkout');
 
+Route::get('/order', [OrderController::class, 'index'])->name('order');
 Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/order', function () {
-    return view('order');
-});
-Route::get('/cart', function () {
-    return view('cart');
-});
 
 
 //login google

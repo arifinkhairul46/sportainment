@@ -181,17 +181,16 @@
                     @foreach ($list_lapangan as $lapang)                        
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="heading-{{$lapang->id}}">
+                        <h2 class="accordion-header" id="heading-{{$lapang->id}}">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{$lapang->id}}" aria-expanded="true" aria-controls="collapse-{{$lapang->id}}">
-                              {{$lapang->nama}}
+                            {{$lapang->nama}}
                             </button>
-                          </h2>
-                          <div id="collapse-{{$lapang->id}}" class="accordion-collapse collapse" aria-labelledby="heading-{{$lapang->id}}" data-bs-parent="#accordionExample">
+                        </h2>
+                        <div id="collapse-{{$lapang->id}}" class="accordion-collapse collapse" aria-labelledby="heading-{{$lapang->id}}" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <table class="table text-center" style="vertical-align:middle;font-size:13px;">
                                     <thead class="text-start">
                                         <tr><th colspan="4">
-                                            <input type="hidden" id="isWeekend" name="isWeekend" class="isWeekend">
                                             <h6 class="resDate"></h6>
                                         </th>
                                     </tr></thead>
@@ -200,26 +199,26 @@
                                         <tr>
                                             <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
                                             <td class="col-md-3 col-6"></td>
-                                            <td class="price col-md-3 col-6"> 
-                                            <b class="price-weekday" style="display: none">
+                                            <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
+                                            Rp <b class="price-weekday" style="display: none">
                                                 @if  ($item->sesi < 10 )
-                                                Rp {{number_format($lapang->harga_weekday_perjam_1)}}
+                                            {{number_format($lapang->harga_weekday_perjam_1)}}
                                                 @else
-                                                Rp {{number_format($lapang->harga_weekday_perjam_2)}}
+                                            {{number_format($lapang->harga_weekday_perjam_2)}}
                                                 @endif
                                             </b>
                                             <b class="price-weekend" style="display: none">
                                                 @if ($item->sesi < 10 )
-                                                Rp {{number_format($lapang->harga_weekend_perjam_1)}}
+                                            {{number_format($lapang->harga_weekend_perjam_1)}}
                                                 @else
-                                                Rp {{number_format($lapang->harga_weekend_perjam_2)}}
+                                            {{number_format($lapang->harga_weekend_perjam_2)}}
                                                 @endif
                                             </b>
                                             </td>
                                             <td class="col-md-3 col-6">
                                                 
                                                 @if (Auth::check())
-                                                <a href="#" onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}' )" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</a>
+                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}')" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</button>
                                                 @else
                                                 <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
                                                 @endif
@@ -229,15 +228,21 @@
                                     </tbody>
                                 </table>
                             </div>
-                          </div>
+                        </div>
                         </div>
                     </div>
                     @endforeach
-                    <div class="mt-3 checkout" id="checkout"> 
-                      <a href="/cart" class="btn btn-primary form-control">
-                          <i class="fas fa-shopping-cart" aria-hidden="true"></i> Checkout
-                      </a>
-                    </div>
+                    <form action="{{route('checkout')}}" method="POST">
+                    @csrf
+                        <div class="mt-3" id="checkout">
+                            <input type="hidden" id="isWeekend" name="isWeekend" class="isWeekend">
+                            <input type="hidden" id="dateSelected" name="dateSelected" class="dateSelected">
+                            <input type="hidden" id="cart" name="cart">
+                            <button type="submit" class="btn btn-primary form-control">
+                                <i class="fas fa-shopping-cart" aria-hidden="true"></i><b class="checkout"> Checkout {{session('cart') ? count(session('cart')) : ''}}</b>
+                                </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -306,6 +311,7 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
      <script src="{{asset ('admin/plugins/fullcalendar/locales/id.js')}}"></script>
      <script>
+        var cart = [];
         document.addEventListener('DOMContentLoaded', function() {
           var calendarEl = document.getElementById('calendar');
           var calendar = new FullCalendar.Calendar(calendarEl, 
@@ -329,6 +335,7 @@
                 }
                 
                 $('.resDate').html(dateSelected );
+                $('.dateSelected').val(info.dateStr);
 
 
             }
@@ -339,17 +346,11 @@
 
     function generate_id_booking (lapang, sesi, tanggal) {
         const today = new Date();
-        const number = +1;
+        const number = Math.floor(Math.random() * 1000);
 
-        if (number < 10) {
-            temp = "00" 
-        } else if (number < 100) {
-            temp = "0"
-        } else {
-            temp = ""
-        }
+       
         
-        const id_booking = "SAR" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + lapang + sesi + temp + number;
+        const id_booking = "SAR" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + lapang + sesi + number;
 
         return id_booking
 
@@ -357,29 +358,77 @@
 
     function addToCart (id_lapang, id_sesi) {
 
-        const id_booking = generate_id_booking( id_lapang, id_sesi, $('.resDate').text());
-        // console.log(id_booking);
+        // $("#checkout").show()
+        const id_booking = generate_id_booking( id_lapang, id_sesi, $('.dateSelected').val());
         const isWeekend = $('.isWeekend').val();
-        const price = $('.price').val();
-        console.log(isWeekend);
+        if (isWeekend) {
+            var price = $(`#price-${id_lapang}-${id_sesi} .price-weekend`).text();
+        } else {
+            var price = $(`#price-${id_lapang}-${id_sesi} .price-weekday`).text();
+        }
+        var price = price.replace(/\,/g,'');
+        price = parseInt(price);
 
         const data = {
             id_lapang: id_lapang,
             id_sesi: id_sesi,
             id_booking: id_booking,
-            tanggal: $('.resDate').text(),
+            tanggal: $('.dateSelected').val(),
+            isWeekend: isWeekend,
             price: price
         }
 
+        console.log(data);
+
+        cart.push(data);
+        $('.checkout').html("Checkout " + cart.length);
+
+        console.log(cart);
+
+        $('#cart').val(JSON.stringify(cart));
+    }
+
+    function checkout () {
+        $.post('/checkout', 
+        {cart: cart,
+        _token: '{{ csrf_token() }}'
+        },
+        function (response) {
+            console.log(response);
+            // if (response.status == 'success') {
+            //     window.location.href = '/cart';
+            // } else {
+            //     alert('Gagal mengakses cart');
+            // }
+        })
         // $.ajax({
-        //     url: '/cart/add',
+        //     url: '/checkout',
         //     type: 'POST',
-        //     data: data,
+        //     data: {
+        //         "_token": "{{ csrf_token() }}",
+        //         cart: cart
+        //     },
         //     success: function (response) {
-        //         console.log(response);
+        //         if (response == 'sukses') {
+        //             window.location.href = '/cart';
+        //         }
         //     }
         // })
+    }
 
+    function remove_cart () {
+        $.ajax({
+            url: '/cart/remove',
+            type: 'POST',
+            success: function (response) {
+                // console.log(response);
+                // if (response.status == 'success') {
+                //     window.location.href = '/cart';
+                // } else {
+                //     alert('Gagal mengakses cart');
+                // }
+            }
+        })
     }
   
       </script>

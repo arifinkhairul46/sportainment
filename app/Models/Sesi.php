@@ -11,8 +11,8 @@ class Sesi extends Model
     protected $guarded = ['id'];
     protected $table = 'm_sesi';
 
-    public static function get_sesi_1 ()
+    public static function get_sesi ($sesi)
     {
-        //
+        return Sesi::where('id', $sesi)->first();
     }
 }

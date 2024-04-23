@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body mb-3 row">
                         <table id="t_order" class="table mt-3">
-                            <thead style="font-size: 12px;">
+                            <thead>
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">ID ORDER</th>
@@ -31,8 +31,26 @@
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody style="font-size: 10px;">
-                              
+                            <tbody>
+                              @foreach($order as $item)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$item->id_booking}}</td>
+                                    <td>
+                                        @if($item->status_bayar == 1)
+                                            <span class="bg-warning">Menunggu Konfirmasi</span>
+                                        @elseif($item->status_bayar == 2)
+                                            <span class="bg-success">Pembayaran Diterima</span>
+                                        @endif
+                                    </td>
+                                    <td>Rp. {{$item->total_harga}}</td>
+                                    <td>Rp. {{$item->diskon}}</td>
+                                    <td>Rp. {{$item->total_bayar}}</td>
+                                    <td>
+                                        <a href="/order/{{$item->id}}" class="btn btn-sm btn-primary">Detail</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

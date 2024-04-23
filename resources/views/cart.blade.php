@@ -37,10 +37,10 @@
                 <hr class="mt-4 mb-0">
 
                 <div class="card-body mt-3">
-                    <table class="table" style="vertical-align:middle;font-size:13px;">
+                    <table class="table cart" style="vertical-align:middle;">
                         <thead>
                             <tr>
-                                <th>Arena</th>
+                                <th>Lapangan</th>
                                 <th>Tanggal</th>
                                 <th>Sesi</th>
                                 <th>Harga</th>
@@ -48,16 +48,20 @@
                             </tr>
                         </thead>
                         <tbody class="cart_list">
-                            <tr>
-                                <td>Futsal / Basket</td>
-                                <td>Kam, 25 Apr 2024</td>
-                                <td>Sesi 8<br>20.00 - 22.00</td>
-                                <td>Rp 700.000</td>
-                                <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart()" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
-                            </tr>
+                            <?php $total = 0; ?>
+                            @foreach($data as $item) 
+                                <tr>
+                                    <td>{{$item['id_lapang']}}</td>
+                                    <td>{{$item['tanggal']}}</td>
+                                    <td>Sesi {{$item['id_sesi']}}</td>
+                                    <td>Rp {{number_format($item['price'])}}</td>
+                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart()" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
+                                </tr>
+                                <?php $total += $item['price']; ?>
+                            @endforeach
                             <tr>
                                 <td colspan="3"><h6>Total Harga</h6></td>
-                                <td colspan="2"><h6>Rp 700.000</h6></td>
+                                <td colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
                             </tr>
                             <tr>
                                 <td colspan="3">Diskon</td>
@@ -87,7 +91,7 @@
                             
                             <tr>
                                 <td colspan="5" class="text-end">
-                                    <button class="btn btn-primary btn-sm" onclick="checkout()"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Payment</button>
+                                    <button class="btn btn-primary btn-sm" onclick="checkout()"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
                                 </td>
                             </tr>
                         </tbody>
