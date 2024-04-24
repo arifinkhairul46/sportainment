@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artikel;
+use App\Models\Diskon;
 use App\Models\Lapangan;
 use App\Models\Sesi;
 use Carbon\Carbon;
@@ -73,17 +74,38 @@ class HomeController extends Controller
 
     public function checkout (Request $request) {
 
-        $data = $request->cart;
         
+        $data = $request->cart;
+ 
+        // return $data;
         $data = json_decode($data, true);
-        // dd($data[0])
+        
 
-        // return $data[0]['id_lapang'];
-        return view(' cart', compact('data'));
+        foreach ($data as $value) {
+            $lapangan = Lapangan::get_lapangan($value['id_lapang']);
+            $sesi = Sesi::get_sesi($value['id_sesi']);
+        }
+
+
+        // return $lapangan;
+        
+        return view('cart', compact('data', 'lapangan', 'sesi'));
         
     }
 
     public function cart (Request $request) {
-       
+        
+        return view('cart');
+        
     }
+
+    public function remove_cart(Request $request, $id) {
+        $cart = session()->get('cart');
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+
+        return redirect()->back();
+    }
+
+    
 }

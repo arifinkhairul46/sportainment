@@ -37,7 +37,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // dd($request->all());
+            $order = new Order();
+            $order->id = $request->id;
+            $order->nama_penyewa = $request->nama_penyewa;
+            $order->no_hp = $request->no_hp;
+            $order->dp = $request->dp;
+            $order->tgl_dp = $request->tgl_dp;
+            $order->total_harga = $request->total_harga;
+            $order->diskon = $request->diskon;
+            $order->sisa_bayar = $request->sisa_bayar;
+            $order->status_bayar = $request->status_bayar;
+            $order->status_approval = $request->status_approval;
+            $order->save();
+
+            return redirect()->route('order.index')->with('success', 'Data berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**

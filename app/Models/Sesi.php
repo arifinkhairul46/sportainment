@@ -13,6 +13,6 @@ class Sesi extends Model
 
     public static function get_sesi ($sesi)
     {
-        return Sesi::where('id', $sesi)->first();
+        return Sesi::whereIn('sesi', array($sesi))->get();
     }
 }

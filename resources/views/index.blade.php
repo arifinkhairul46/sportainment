@@ -218,7 +218,7 @@
                                             <td class="col-md-3 col-6">
                                                 
                                                 @if (Auth::check())
-                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}')" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</button>
                                                 @else
                                                 <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
                                                 @endif
@@ -356,7 +356,7 @@
 
     }
 
-    function addToCart (id_lapang, id_sesi) {
+    function addToCart (id_lapang, id_sesi, nama_lapang) {
 
         // $("#checkout").show()
         const id_booking = generate_id_booking( id_lapang, id_sesi, $('.dateSelected').val());
@@ -373,6 +373,7 @@
             id_lapang: id_lapang,
             id_sesi: id_sesi,
             id_booking: id_booking,
+            nama_lapang: nama_lapang,
             tanggal: $('.dateSelected').val(),
             isWeekend: isWeekend,
             price: price

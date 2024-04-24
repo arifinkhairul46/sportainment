@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -25,6 +26,9 @@ Route::get('/booking/{id_lapang}/{id_sesi}', [HomeController::class, 'addToCart'
 
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('cart', [HomeController::class, 'checkout'])->name('checkout');
+Route::post('cart/remove/{id}', [HomeController::class, 'remove_cart'])->name('remove_cart');
+
+Route::get('diskon', [DiskonController::class, 'show'])->name('diskon.show');
 
 Route::get('/order', [OrderController::class, 'index'])->name('order');
 Route::get('/profile', function () {

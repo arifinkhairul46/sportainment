@@ -49,13 +49,13 @@
                         </thead>
                         <tbody class="cart_list">
                             <?php $total = 0; ?>
-                            @foreach($data as $item) 
+                            @foreach($data as $item)
                                 <tr>
-                                    <td>{{$item['id_lapang']}}</td>
-                                    <td>{{$item['tanggal']}}</td>
+                                    <td id="nama_lapang">{{$item['nama_lapang']}}</td>
+                                    <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
                                     <td>Sesi {{$item['id_sesi']}}</td>
                                     <td>Rp {{number_format($item['price'])}}</td>
-                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart()" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
+                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
                                 </tr>
                                 <?php $total += $item['price']; ?>
                             @endforeach
@@ -63,29 +63,29 @@
                                 <td colspan="3"><h6>Total Harga</h6></td>
                                 <td colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
                             </tr>
-                            <tr>
-                                <td colspan="3">Diskon</td>
-                                <td colspan="2">Rp 0</td>
-                            </tr>
+                            
                             <tr>
                                 <td colspan="3">
-                                    <div class="form-group row">
-                                        <div class="col-xl-5 col-md-7 col-7">
-                                            <input type="text" class="form-control form-control-sm" name="coupon" placeholder="Kode Diskon" value="" >
+                                    {{-- <form action="{{route('diskon.store')}}" method="POST">
+                                        @csrf --}}
+                                        <div class="form-group row">
+                                            <div class="col-xl-5 col-md-7 col-7">
+                                                <input type="text" class="form-control form-control-sm diskon" id="diskon" name="diskon" placeholder="Kode Diskon" >
+                                            </div>
+                                            <div class="col-sm-3 col-3">
+                                                <button onclick="check_diskon()" class="btn btn-primary text-xs" >Apply</button>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3 col-3">
-                                            <button class="btn btn-primary text-xs" onclick="check_coupon()">Apply</button>
-                                        </div>
-                                    </div>
+                                    {{-- </form> --}}
                                 </td>
-                                <td colspan="2">Rp 0</td>
+                                <td colspan="2" id="rpdiskon">Rp 0 </td>
                             </tr>
                             <tr>
                                 <td colspan="3">
                                     <h6>Grand Total</h6>
                                 </td>
                                 <td colspan="2">
-                                    <h6>Rp 700.000</h6>
+                                    <h6 id="rptotal">Rp {{number_format($total)}}</h6>
                                 </td>
                             </tr>
                             
@@ -101,17 +101,70 @@
         </div> 
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
+       
+
         function checkout(){
-            alert('Checkout');
+            var nama_lapang = $('#nama_lapang').val();
+            alert(nama_lapang);
         }
 
-        function check_coupon(){
-            alert('Check Coupon');
+        function remove_cart(id){
+            alert(id);
+
+            if(confirm('Are you sure want to remove this item?')){
+                $.ajax({
+                    url: '/cart/remove/'+id,
+                    type: 'GET',
+                    success: function(response){
+                        location.reload();
+                    }
+                });
+            }
+        
         }
 
-        function remove_cart(){
-            alert('Remove Cart');
+        function addCommas(nStr)
+        {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        function check_diskon(){
+            var diskon = $('#diskon').val();
+            alert(diskon);
+            var total = {{$total}};
+            var diskon0 = 0;
+            
+            $.ajax({
+                url: '/diskon',
+                type: 'GET',
+                data: {
+                    diskon: diskon
+                },
+                success: function(response){
+                    if(response == 'Kode diskon tidak ditemukan'){
+                        alert('Kode diskon tidak ditemukan');
+                        $('#rpdiskon').html('Rp '+ diskon0);
+                        grand_total =addCommas(total);
+                        $('#rptotal').html('Rp '+ grand_total);
+                        return;
+                    }else{
+                        diskon = addCommas(response.persentase * total / 100);
+                        $('#rpdiskon').html( 'Rp '+ diskon);
+                        grand_total = addCommas(total - response.persentase * total / 100);
+                        $('#rptotal').html('Rp '+grand_total);
+                    }
+                }
+            });
         }
     </script>
 @endsection
