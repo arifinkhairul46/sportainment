@@ -16,8 +16,8 @@ class OrderDetail extends Model
         'id_sesi',
         'tgl_mulai',
         'tgl_selesai',
-        'jam_mulai',
-        'jam_selesai',
+        // 'jam_mulai',
+        // 'jam_selesai',
         'total_harga_sewa',
         'status_approval'
     ];

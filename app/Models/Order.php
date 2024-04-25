@@ -11,9 +11,7 @@ class Order extends Model
     protected $table = 't_sewa';
 
     protected $fillable = [
-        'id',
-        'nama_penyewa',
-        'no_hp',
+        'id_booking',
         'dp',
         'tgl_dp',
         'total_harga',
