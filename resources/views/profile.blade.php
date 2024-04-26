@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid ">
-        <img src="assets/img/img-order-page.png" alt="img-banner-profile" height="320">
+        <img src="assets/img/img-order-page.png" alt="img-banner-profile" class="responsive" height="320">
     </div>
     <div class="container">
         <div class="row mt-4">

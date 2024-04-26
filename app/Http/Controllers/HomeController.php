@@ -79,6 +79,7 @@ class HomeController extends Controller
  
         // return $data;
         $data = json_decode($data, true);
+
         
 
         foreach ($data as $value) {
@@ -86,8 +87,6 @@ class HomeController extends Controller
             $sesi = Sesi::get_sesi($value['id_sesi']);
         }
 
-
-        // return $lapangan;
         
         return view('cart', compact('data', 'lapangan', 'sesi'));
         

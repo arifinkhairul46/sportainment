@@ -30,7 +30,9 @@ Route::post('cart/remove/{id}', [HomeController::class, 'remove_cart'])->name('r
 
 Route::get('diskon', [DiskonController::class, 'show'])->name('diskon.show');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::post('/booking', [OrderController::class, 'store'])->name('booking.store');
+
 Route::get('/profile', function () {
     return view('profile');
 });

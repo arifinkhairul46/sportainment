@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid ">
-        <img src="assets/img/img-order-page.png" alt="img-banner-profile" width="1640" height="320">
+        <img src="assets/img/img-order-page.png" alt="img-banner-profile" class="responsive" width="1640" height="320">
     </div>
     <div class="container">
         <div class="card shadow my-3">
@@ -66,17 +66,14 @@
                             
                             <tr>
                                 <td colspan="3">
-                                    {{-- <form action="{{route('diskon.store')}}" method="POST">
-                                        @csrf --}}
-                                        <div class="form-group row">
-                                            <div class="col-xl-5 col-md-7 col-7">
-                                                <input type="text" class="form-control form-control-sm diskon" id="diskon" name="diskon" placeholder="Kode Diskon" >
-                                            </div>
-                                            <div class="col-sm-3 col-3">
-                                                <button onclick="check_diskon()" class="btn btn-primary text-xs" >Apply</button>
-                                            </div>
+                                    <div class="form-group row">
+                                        <div class="col-xl-5 col-md-7 col-7">
+                                            <input type="text" class="form-control form-control-sm diskon" id="diskon" name="diskon" placeholder="Kode Diskon" >
                                         </div>
-                                    {{-- </form> --}}
+                                        <div class="col-sm-3 col-3">
+                                            <button onclick="check_diskon()" class="btn btn-primary text-xs" >Apply</button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td colspan="2" id="rpdiskon">Rp 0 </td>
                             </tr>
@@ -91,7 +88,13 @@
                             
                             <tr>
                                 <td colspan="5" class="text-end">
-                                    <button class="btn btn-primary btn-sm" onclick="checkout()"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
+                                    <form action="{{route('booking.store')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="data" value="{{json_encode($data)}}">
+                                        <input type="hidden" name="fix_total" value="{{$total}}">
+                                        <input type="hidden" name="fix_diskon" id="fix_diskon" value="0">
+                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
@@ -101,15 +104,8 @@
         </div> 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
         let arr_data = @json($data);
-       
-
-        function checkout(){
-            var nama_lapang = $('#nama_lapang').val();
-            alert(nama_lapang);
-        }
 
         function remove_cart(idx, id_booking){
             alert(id_booking);
@@ -136,7 +132,7 @@
 
         function check_diskon(){
             var diskon = $('#diskon').val();
-            alert(diskon);
+            // alert(diskon);
             var total = {{$total}};
             var diskon0 = 0;
             
@@ -150,15 +146,49 @@
                     if(response == 'Kode diskon tidak ditemukan'){
                         alert('Kode diskon tidak ditemukan');
                         $('#rpdiskon').html('Rp '+ diskon0);
+                        $('#fix_diskon').val(diskon0);
                         grand_total =addCommas(total);
                         $('#rptotal').html('Rp '+ grand_total);
                         return;
                     }else{
                         diskon = addCommas(response.persentase * total / 100);
                         $('#rpdiskon').html( 'Rp '+ diskon);
+                        $('#fix_diskon').val(parseInt(diskon.replace(/\,/g,'')));
                         grand_total = addCommas(total - response.persentase * total / 100);
                         $('#rptotal').html('Rp '+grand_total);
                     }
+                }
+            });
+        }
+
+
+        function checkout(){
+            var grand_total = $('#rptotal').text().replace("Rp ", "");
+            grand_total = grand_total.replace(/\,/g,'');
+            grand_total = parseInt(grand_total);
+            var diskon = $('#rpdiskon').text().replace("Rp ", "");
+            diskon = diskon.replace(",", "");
+            diskon = parseInt(diskon);
+
+            // console.log(data);
+
+            $.ajax({
+                url: '/booking',
+                type: 'POST',
+                data: {
+                    data: {!! json_encode($data) !!},
+                    grand_total: grand_total,
+                    diskon: diskon,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+                    console.log(response);
+                    // if(response == 'success'){
+                    //     alert('Booking berhasil');
+                    //     location.href = '/history';
+                    // }else{
+                    //     alert('Booking gagal');
+                    // }
                 }
             });
         }

@@ -238,9 +238,9 @@
                             <input type="hidden" id="isWeekend" name="isWeekend" class="isWeekend">
                             <input type="hidden" id="dateSelected" name="dateSelected" class="dateSelected">
                             <input type="hidden" id="cart" name="cart">
-                            <button type="submit" class="btn btn-primary form-control">
+                            <button type="submit" class="btn btn-primary form-control" id="chekout" style="display: none">
                                 <i class="fas fa-shopping-cart" aria-hidden="true"></i><b class="checkout"> Checkout {{session('cart') ? count(session('cart')) : ''}}</b>
-                                </button>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -259,7 +259,7 @@
                 @foreach ($artikel_show as $item)                
                 <div class="col-lg-4 mb-5 mb-lg-0" >
                     <div class="mb-4">
-                        <img data-wow-delay="0.3s" src="{{asset($item->image)}}" width="400">
+                        <img data-wow-delay="0.3s" src="{{asset($item->image)}}" class="responsive" width="400">
                     </div>
                     <p style="font-size: 10px"> {{$item->upload_by}} </p>
                     <p style="font-size: 10px"> {{date('d-m-Y', strtotime($item->created_at))}} </p>
@@ -358,10 +358,11 @@
 
     function addToCart (id_lapang, id_sesi, nama_lapang) {
 
-        // $("#checkout").show()
+        $("#chekout").show();
         const id_booking = generate_id_booking( id_lapang, id_sesi, $('.dateSelected').val());
         const isWeekend = $('.isWeekend').val();
-        if (isWeekend) {
+        console.log(isWeekend);
+        if (isWeekend == 'true') {
             var price = $(`#price-${id_lapang}-${id_sesi} .price-weekend`).text();
         } else {
             var price = $(`#price-${id_lapang}-${id_sesi} .price-weekday`).text();

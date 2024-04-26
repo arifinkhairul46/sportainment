@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Sesi;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -37,25 +40,50 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            // dd($request->all());
-            $order = new Order();
-            $order->id = $request->id;
-            $order->nama_penyewa = $request->nama_penyewa;
-            $order->no_hp = $request->no_hp;
-            $order->dp = $request->dp;
-            $order->tgl_dp = $request->tgl_dp;
-            $order->total_harga = $request->total_harga;
-            $order->diskon = $request->diskon;
-            $order->sisa_bayar = $request->sisa_bayar;
-            $order->status_bayar = $request->status_bayar;
-            $order->status_approval = $request->status_approval;
-            $order->save();
+        
+        $order = $request->all();
+        
 
-            return redirect()->route('order.index')->with('success', 'Data berhasil ditambahkan');
-        } catch (\Throwable $th) {
-            //throw $th;
+        $id_booking = 'SRA' . date('Ymd') . mt_rand(100, 999);
+        $user_id = auth()->user()->id;
+        $fix_total = $order['fix_total'];
+        $diskon = $order['fix_diskon'];
+        $order = json_decode($order['data'], true);
+        // return $fix_total;
+
+        $order_create = Order::create([
+            'id_booking' => $id_booking,
+            'id_user' => $user_id,
+            'dp' => 0,
+            'tgl_dp' => date('Y-m-d'),
+            'total_harga' => $fix_total,
+            'diskon' => $diskon,
+            'sisa_bayar' => $fix_total - $diskon,
+            'status_bayar' => 1,
+            'status_approval' => 1
+        ]);
+
+        foreach ($order as $item) {
+            $order_detail = OrderDetail::create([
+                $id_sesi = Sesi::where('sesi', $item['id_sesi'])->first(),
+                $jam_mulai = $id_sesi->jam_mulai,
+                $jam_selesai = $id_sesi->jam_selesai,
+
+                'id' => $id_booking,
+                'id_lapangan' => $item['id_lapang'],
+                'id_sesi' => $item['id_sesi'],
+                'jam_mulai' => $jam_mulai,
+                'jam_selesai' => $jam_selesai,
+                'tgl_mulai' => $item['tanggal'],
+                'tgl_selesai' => $item['tanggal'],
+                'total_harga_sewa' => $item['price'],
+                'status_approval' => 1
+            ]);
+
         }
+
+        return redirect()->route('order.index')->with('success', 'Booking berhasil');
+
     }
 
     /**
