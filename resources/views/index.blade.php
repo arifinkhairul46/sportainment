@@ -218,7 +218,8 @@
                                             <td class="col-md-3 col-6">
                                                 
                                                 @if (Auth::check())
-                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
                                                 @else
                                                 <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
                                                 @endif
@@ -238,7 +239,7 @@
                             <input type="hidden" id="isWeekend" name="isWeekend" class="isWeekend">
                             <input type="hidden" id="dateSelected" name="dateSelected" class="dateSelected">
                             <input type="hidden" id="cart" name="cart">
-                            <button type="submit" class="btn btn-primary form-control" id="chekout" style="display: none">
+                            <button type="submit" class="btn btn-primary form-control" id="checkout-btn" style="display: none">
                                 <i class="fas fa-shopping-cart" aria-hidden="true"></i><b class="checkout"> Checkout {{session('cart') ? count(session('cart')) : ''}}</b>
                             </button>
                         </div>
@@ -358,7 +359,7 @@
 
     function addToCart (id_lapang, id_sesi, nama_lapang) {
 
-        $("#chekout").show();
+        $("#checkout-btn").show();
         const id_booking = generate_id_booking( id_lapang, id_sesi, $('.dateSelected').val());
         const isWeekend = $('.isWeekend').val();
         console.log(isWeekend);
@@ -383,11 +384,15 @@
         console.log(data);
 
         cart.push(data);
+        
         $('.checkout').html("Checkout " + cart.length);
 
         console.log(cart);
 
         $('#cart').val(JSON.stringify(cart));
+        $('#book-btn-'+id_lapang+'-'+id_sesi).hide();
+        $('#remove-btn-'+id_lapang+'-'+id_sesi).attr('onclick', "remove_cart('"+id_booking+"',"+id_lapang+","+id_sesi+")");
+        $('#remove-btn-'+id_lapang+'-'+id_sesi).show();
     }
 
     function checkout () {
@@ -418,19 +423,16 @@
         // })
     }
 
-    function remove_cart () {
-        $.ajax({
-            url: '/cart/remove',
-            type: 'POST',
-            success: function (response) {
-                // console.log(response);
-                // if (response.status == 'success') {
-                //     window.location.href = '/cart';
-                // } else {
-                //     alert('Gagal mengakses cart');
-                // }
-            }
-        })
+    function remove_cart (id_booking, id_lapang, id_sesi) {
+        cart = cart.filter(data => data.id_booking !== id_booking);
+        $('#book-btn-'+id_lapang+'-'+id_sesi).show();
+        $('#remove-btn-'+id_lapang+'-'+id_sesi).hide();
+        console.log(cart);
+
+        if(cart.length>0)
+            $('.checkout').html("Checkout " + cart.length);
+        else
+            $('#checkout-btn').hide();
     }
   
       </script>
