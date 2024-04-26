@@ -190,15 +190,25 @@
                             <div class="accordion-body">
                                 <table class="table text-center" style="vertical-align:middle;font-size:13px;">
                                     <thead class="text-start">
-                                        <tr><th colspan="4">
+                                        <tr>
+                                            <th colspan="4">
                                             <h6 class="resDate"></h6>
-                                        </th>
-                                    </tr></thead>
+                                            </th>
+                                        </tr>
+                                    </thead>
                                     <tbody class="jadwal">
                                         @foreach ($sesi as $item)
                                         <tr>
                                             <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
-                                            <td class="col-md-3 col-6"></td>
+                                            <td class="col-md-3 col-6">
+                                                {{-- @foreach ($order_detail as $order) --}}
+                                                    {{-- @if ($order->id_lapangan == $lapang->id && $order->tanggal == date('Y-m-d', strtotime($item->tanggal)) && $order->id_sesi == $item->sesi)
+                                                        <span class="badge bg-danger">Booked</span>
+                                                    @else
+                                                        <span class="badge bg-success">Available</span>
+                                                    @endif --}}
+                                                {{-- @endforeach --}}
+                                            </td>
                                             <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
                                             Rp <b class="price-weekday" style="display: none">
                                                 @if  ($item->sesi < 10 )
@@ -318,8 +328,19 @@
           {
             locale: 'id',
             initialView: 'dayGridMonth',
+            selectable: true,
+            selectAllow: function (info) {
+            return (info.start >= getDateWithoutTime(new Date()));
+            },
+            select: function (info) {
+            console.log(info.startStr, info.endStr);
+            },   
+            validRange: {
+                start: new Date()
+            },
             dateClick: function (info) {
                 moment.locale('id');
+                var clickedDate = moment(info.dateStr).format('dddd, Do MMMM YYYY');
                 var dateSelected = moment(info.dateStr).format('dddd, Do MMMM YYYY');
 
                 var dayOfWeek = (info.date).getDay();
@@ -338,11 +359,17 @@
                 $('.dateSelected').val(info.dateStr);
 
 
-            }
+            },
         });
         calendar.render();
         
     });
+
+    function getDateWithoutTime(dt){
+        dt.setHours(0,0,0,0);
+        return dt;
+    }
+
 
     function generate_id_booking (lapang, sesi, tanggal) {
         const today = new Date();
