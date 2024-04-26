@@ -104,6 +104,7 @@
         </div> 
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
         let arr_data = @json($data);
 
