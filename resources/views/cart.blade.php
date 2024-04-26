@@ -49,13 +49,13 @@
                         </thead>
                         <tbody class="cart_list">
                             <?php $total = 0; ?>
-                            @foreach($data as $item)
-                                <tr>
+                            @foreach($data as $idx => $item)
+                                <tr id="{{$item['id_booking']}}">
                                     <td id="nama_lapang">{{$item['nama_lapang']}}</td>
                                     <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
                                     <td>Sesi {{$item['id_sesi']}}</td>
                                     <td>Rp {{number_format($item['price'])}}</td>
-                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
+                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$idx}}','{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
                                 </tr>
                                 <?php $total += $item['price']; ?>
                             @endforeach
@@ -103,6 +103,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
+        let arr_data = @json($data);
        
 
         function checkout(){
@@ -110,17 +111,12 @@
             alert(nama_lapang);
         }
 
-        function remove_cart(id){
-            alert(id);
+        function remove_cart(idx, id_booking){
+            alert(id_booking);
 
             if(confirm('Are you sure want to remove this item?')){
-                $.ajax({
-                    url: '/cart/remove/'+id,
-                    type: 'GET',
-                    success: function(response){
-                        location.reload();
-                    }
-                });
+                $('#'+id_booking).remove();
+                arr_data = arr_data.filter(data => data.id_booking !== id_booking);
             }
         
         }
