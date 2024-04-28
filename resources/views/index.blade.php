@@ -197,45 +197,45 @@
                                         </tr>
                                     </thead>
                                     <tbody class="jadwal">
-                                        @foreach ($sesi as $item)
-                                        <tr>
-                                            <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
-                                            <td class="col-md-3 col-6">
-                                                {{-- @foreach ($order_detail as $order) --}}
-                                                    {{-- @if ($order->id_lapangan == $lapang->id && $order->tanggal == date('Y-m-d', strtotime($item->tanggal)) && $order->id_sesi == $item->sesi)
-                                                        <span class="badge bg-danger">Booked</span>
-                                                    @else
-                                                        <span class="badge bg-success">Available</span>
-                                                    @endif --}}
-                                                {{-- @endforeach --}}
-                                            </td>
-                                            <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
-                                            Rp <b class="price-weekday" style="display: none">
-                                                @if  ($item->sesi < 10 )
-                                            {{number_format($lapang->harga_weekday_perjam_1)}}
-                                                @else
-                                            {{number_format($lapang->harga_weekday_perjam_2)}}
-                                                @endif
-                                            </b>
-                                            <b class="price-weekend" style="display: none">
-                                                @if ($item->sesi < 10 )
-                                            {{number_format($lapang->harga_weekend_perjam_1)}}
-                                                @else
-                                            {{number_format($lapang->harga_weekend_perjam_2)}}
-                                                @endif
-                                            </b>
-                                            </td>
-                                            <td class="col-md-3 col-6">
-                                                
-                                                @if (Auth::check())
-                                                <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
-                                                <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
-                                                @else
-                                                <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                        {{-- @foreach ($order_detail as $order) --}}
+                                            @foreach ($sesi as $item)
+                                                <tr>
+                                                    <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
+                                                    <td class="col-md-3 col-6">
+                                                            {{-- @if ($order->id_lapangan == $lapang->id && $order->id_sesi == $item->sesi)
+                                                                <span class="badge bg-danger"> Booked </span>
+                                                            @else
+                                                                <span class="badge bg-success">Available</span>
+                                                            @endif --}}
+                                                    </td>
+                                                    <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
+                                                    Rp <b class="price-weekday" style="display: none">
+                                                        @if  ($item->sesi < 10 )
+                                                    {{number_format($lapang->harga_weekday_perjam_1)}}
+                                                        @else
+                                                    {{number_format($lapang->harga_weekday_perjam_2)}}
+                                                        @endif
+                                                    </b>
+                                                    <b class="price-weekend" style="display: none">
+                                                        @if ($item->sesi < 10 )
+                                                    {{number_format($lapang->harga_weekend_perjam_1)}}
+                                                        @else
+                                                    {{number_format($lapang->harga_weekend_perjam_2)}}
+                                                        @endif
+                                                    </b>
+                                                    </td>
+                                                    <td class="col-md-3 col-6">
+                                                        
+                                                        @if (Auth::check())
+                                                        <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                        <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
+                                                        @else
+                                                        <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        {{-- @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>

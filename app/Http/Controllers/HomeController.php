@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use App\Models\Diskon;
 use App\Models\Lapangan;
+use App\Models\OrderDetail;
 use App\Models\Sesi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,9 +17,11 @@ class HomeController extends Controller
         $artikel_show = Artikel::all();
         $list_lapangan = Lapangan::all();
         $sesi = Sesi::all();
+        $order_detail = OrderDetail::get_all_order_detail();
+        // dd($order_detail);        
 
 
-        return view('index', compact('artikel_show', 'list_lapangan', 'sesi'));
+        return view('index', compact('artikel_show', 'list_lapangan', 'sesi', 'order_detail'));
     }
 
     public function generate_id_booking() {

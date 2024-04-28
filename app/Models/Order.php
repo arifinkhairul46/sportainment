@@ -12,6 +12,9 @@ class Order extends Model
 
     protected $fillable = [
         'id_booking',
+        'id_user',
+        'nama_penyewa',
+        'no_hp',
         'dp',
         'tgl_dp',
         'total_harga',
@@ -24,7 +27,7 @@ class Order extends Model
 
     public function orderDetail()
     {
-        return $this->hasMany(OrderDetail::class, 'id');
+        return $this->hasMany(OrderDetail::class, 'id_booking');
     }
 
     public function user()
@@ -38,4 +41,21 @@ class Order extends Model
 
         return $data;
     }
+
+    public static function get_by_id ($id)
+    {
+        $data = Order::where('id_user', $id)->get();
+
+        return $data;
+    }
+
+    public static function get_by_id_detail ($id)
+    {
+        $data = static::with(['orderDetail'])
+            ->where('id_booking', $id)
+            ->get();
+
+        return $data;
+    }
+    
 }

@@ -75,10 +75,72 @@
 
         function detail_order (id) {
             $('.bd-example-modal-lg').modal('show');
+;
+
+            $.ajax({
+                url: '/order/detail/'+id,
+                type: 'GET',
+                success: function(response){
+                    console.log(response);
+                    
+
+                    $('.detail_order_id').text(id);
+                    // $('.detail_disc_code').text(data.disc_code);
+                    // $('.detail_status').html('<span class="bg-warning text-white" style="padding:2px 5px 2px 5px;">'+data.status+'</span><br>');
+                    // $('.detail_order_add').text(data.created_at);
+
+                    $('#listDetailOrder').html('');
+                    var total = 0;
+                    response.forEach((item, index) => {
+                       total += parseInt(item.total_harga_sewa);
+                        $('#listDetailOrder').append(`
+                            <tr>
+                                <td>${index+1}</td>
+                                <td>${item.lapangan.nama}</td>
+                                <td>${item.tgl_mulai}</td>
+                                <td>Sesi ${item.id_sesi} : Jam ${item.sesi.jam_mulai} - ${item.sesi.jam_selesai} </td>
+                                <td style="text-align: right;">Rp ${addCommas(item.total_harga_sewa) }</td>
+                            </tr>
+                            
+                        `);
+
+
+                    });
+
+                    $('#listDetailOrder').append(`
+
+                        <tr>
+                            <td colspan="4" class="text-end">Total harga</td>
+                            <td style="text-align: right;" >Rp ${addCommas(total)} </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-end">Diskon</td>
+                            <td style="text-align: right;">Rp 0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-end">Grand Total</td>
+                            <td style="text-align: right;">Rp ${addCommas(total)} </td>
+                        </tr>
+                    `);
+                }
+            })
         }
 
         function close_modal () {
             $('.bd-example-modal-lg').modal('hide');
+        }
+
+        function addCommas(nStr)
+        {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
         }
     </script>
 
@@ -102,11 +164,11 @@
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div id="invoice"></div>
-                            <div class="row">
+                            <div class="row">                          
                                 <div class="col-md-6">
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Order ID</label>
-                                        <label class="col-sm-8 detail_order_id">GCA202403140001</label>
+                                        <label class="col-sm-8 detail_order_id"></label>
                                     </div>
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Disc Code</label>
@@ -114,26 +176,26 @@
                                     </div>
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Pay Status</label>
-                                        <label class="col-sm-8 detail_status"><span class="bg-warning text-white" style="padding:2px 5px 2px 5px;">Expired</span><br></label>
+                                        <label class="col-sm-8 detail_status"><span class="bg-warning text-white" style="padding:2px 5px 2px 5px;"></span><br></label>
                                     </div>
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Order Add</label>
-                                        <label class="col-sm-8 detail_order_add">14 Mar 2024 10:45:38</label>
+                                        <label class="col-sm-8 detail_order_add"></label>
                                     </div>
                         
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Full Name</label>
-                                        <label class="col-sm-8 detail_name">khairul arifin</label>
+                                        <label class="col-sm-8 detail_name"> {{auth()->user()->name}} </label>
                                     </div>
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Email Address</label>
-                                        <label class="col-sm-8 detail_email">arifinkhairul46@gmail.com</label>
+                                        <label class="col-sm-8 detail_email">{{auth()->user()->email}}</label>
                                     </div>
                                     <div class="row mb-2">
                                         <label class="col-sm-4 fw-bold">Phone</label>
-                                        <label class="col-sm-8 detail_phone">087885293721</label>
+                                        <label class="col-sm-8 detail_phone">{{auth()->user()->no_hp}}</label>
                                     </div>
                                    
                                 </div>
@@ -151,33 +213,12 @@
                                         </tr>
                                     </thead>
                                     <tbody id="listDetailOrder">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>C-tra Arena Basketball Court</td>
-                                            <td>Jum, 15 Mar 2024</td><td>Sesi 3 : 10.00 - 12.00</td>
-                                            <td>Rp 500.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="text-end">Total harga</td>
-                                            <td>Rp 500.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="text-end">Diskon</td>
-                                            <td>Rp 0</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="text-end">Grand Total</td>
-                                            <td>Rp 500.000</td>
-                                        </tr>
+                                    
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

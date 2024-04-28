@@ -53,7 +53,7 @@
                                 <tr id="{{$item['id_booking']}}">
                                     <td id="nama_lapang">{{$item['nama_lapang']}}</td>
                                     <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
-                                    <td>Sesi {{$item['id_sesi']}}</td>
+                                    <td>Sesi {{$item['id_sesi']}} <br> Jam </td>
                                     <td>Rp {{number_format($item['price'])}}</td>
                                     <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$idx}}','{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
                                 </tr>
@@ -61,7 +61,7 @@
                             @endforeach
                             <tr>
                                 <td colspan="3"><h6>Total Harga</h6></td>
-                                <td colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
+                                <td id="total_harga" colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
                             </tr>
                             
                             <tr>
@@ -90,8 +90,8 @@
                                 <td colspan="5" class="text-end">
                                     <form action="{{route('booking.store')}}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="data" value="{{json_encode($data)}}">
-                                        <input type="hidden" name="fix_total" value="{{$total}}">
+                                        <input type="hidden" name="data" id="data" value="{{json_encode($data)}}">
+                                        <input type="hidden" name="fix_total" id="fix_total" value="{{$total}}">
                                         <input type="hidden" name="fix_diskon" id="fix_diskon" value="0">
                                         <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
                                     </form>
@@ -107,6 +107,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
         let arr_data = @json($data);
+        // console.log(arr_data);
 
         function remove_cart(idx, id_booking){
             alert(id_booking);
@@ -115,6 +116,20 @@
                 $('#'+id_booking).remove();
                 arr_data = arr_data.filter(data => data.id_booking !== id_booking);
             }
+
+            let total_harga = 0;
+            arr_data.forEach(data => {
+                total_harga += data.price;
+            });
+
+            $('#rptotal').html('Rp '+addCommas(total_harga));
+            $('#fix_total').val(total_harga);
+            $('#total_harga').html('Rp '+addCommas(total_harga));
+            $('#fix_diskon').val(0);
+            $('#rpdiskon').html('Rp 0');
+            $('#diskon').val('');
+            $('#data').val(JSON.stringify(arr_data));
+
         
         }
 
@@ -134,7 +149,7 @@
         function check_diskon(){
             var diskon = $('#diskon').val();
             // alert(diskon);
-            var total = {{$total}};
+            var total = $('#fix_total').val();
             var diskon0 = 0;
             
             $.ajax({
@@ -164,9 +179,10 @@
 
 
         function checkout(){
-            var grand_total = $('#rptotal').text().replace("Rp ", "");
-            grand_total = grand_total.replace(/\,/g,'');
-            grand_total = parseInt(grand_total);
+            var grand_total = total_harga;
+            // var grand_total = $('#rptotal').text().replace("Rp ", "");
+            // grand_total = grand_total.replace(/\,/g,'');
+            // grand_total = parseInt(grand_total);
             var diskon = $('#rpdiskon').text().replace("Rp ", "");
             diskon = diskon.replace(",", "");
             diskon = parseInt(diskon);

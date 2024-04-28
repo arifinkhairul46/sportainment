@@ -11,30 +11,47 @@ class OrderDetail extends Model
     protected $table = 't_sewa_detail';
 
     protected $fillable = [
-        'id',
+        'id_booking',
         'id_lapangan',
         'id_sesi',
         'tgl_mulai',
         'tgl_selesai',
-        // 'jam_mulai',
-        // 'jam_selesai',
+        'jam_mulai',
+        'jam_selesai',
         'total_harga_sewa',
         'status_approval'
     ];
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'id');
+        return $this->belongsTo(Order::class, 'id_booking');
     }
 
     public function lapangan()
     {
-        return $this->belongsTo(Lapangan::class, 'id');
+        return $this->belongsTo(Lapangan::class, 'id_lapangan');
     }
 
     public function sesi()
     {
-        return $this->belongsTo(Sesi::class, 'id');
+        return $this->belongsTo(Sesi::class, 'id_sesi');
     }
+
+    public static function get_all_order_detail()
+    {
+        $data = static::with(['lapangan', 'sesi'])->get();
+
+        return $data;
+    }
+
+    public static function get_detail_order_by_id($id)
+    {
+        $data = static::with([ 'lapangan', 'sesi'])
+            ->where('id_booking', $id)
+            ->get();
+
+        return $data;
+    }
+
 
 }

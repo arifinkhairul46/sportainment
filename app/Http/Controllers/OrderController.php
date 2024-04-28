@@ -17,8 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::get_all();
-        // dd($order);
+        $id = auth()->user()->id;
+        $order = Order::get_by_id($id);
+        // dd($order_detail);
         return view('order', compact('order'));
     }
 
@@ -45,15 +46,19 @@ class OrderController extends Controller
         
 
         $id_booking = 'SRA' . date('Ymd') . mt_rand(100, 999);
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
         $fix_total = $order['fix_total'];
         $diskon = $order['fix_diskon'];
         $order = json_decode($order['data'], true);
-        // return $fix_total;
+
+        
+        // return $no_hp;
 
         $order_create = Order::create([
             'id_booking' => $id_booking,
-            'id_user' => $user_id,
+            'id_user' => $user->id,
+            'nama_penyewa' => $user->name,
+            'no_hp' => $user->no_hp,
             'dp' => 0,
             'tgl_dp' => date('Y-m-d'),
             'total_harga' => $fix_total,
@@ -129,5 +134,14 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function detail($id)
+    {
+        $order_detail = OrderDetail::get_detail_order_by_id($id);
+
+        // dd($order_detail);
+       
+        return $order_detail;
     }
 }
