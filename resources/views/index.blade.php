@@ -227,7 +227,7 @@
                                                     <td class="col-md-3 col-6">
                                                         
                                                         @if (Auth::check())
-                                                        <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                        <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}', '{{$item->jam_mulai}}', '{{$item->jam_selesai}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
                                                         <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
                                                         @else
                                                         <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
@@ -325,23 +325,38 @@
         var cart = [];
         document.addEventListener('DOMContentLoaded', function() {
           var calendarEl = document.getElementById('calendar');
+          var dateSelected = moment().format('dddd, Do MMMM YYYY');
+          $('.resDate').html(dateSelected);
+          $('.dateSelected').val(moment().format('yyyy-MM-DD'));
+          var today = new Date
+
+          var dayOfWeek = (today).getDay();
+          var is_weekend = (dayOfWeek === 6 ) || (dayOfWeek === 0)
+        
+            if(!is_weekend){
+                $('.price-weekend').hide();
+                $('.price-weekday').show();
+            } else {
+                $('.price-weekend').show();
+                $('.price-weekday').hide();
+            }
+
           var calendar = new FullCalendar.Calendar(calendarEl, 
           {
             locale: 'id',
             initialView: 'dayGridMonth',
             selectable: true,
             selectAllow: function (info) {
-            return (info.start >= getDateWithoutTime(new Date()));
+                return (info.start >= getDateWithoutTime(new Date()));
             },
-            select: function (info) {
-            console.log(info.startStr, info.endStr);
-            },   
             validRange: {
                 start: new Date()
             },
+            
             dateClick: function (info) {
+                console.log(info.dateStr);
+                
                 moment.locale('id');
-                var clickedDate = moment(info.dateStr).format('dddd, Do MMMM YYYY');
                 var dateSelected = moment(info.dateStr).format('dddd, Do MMMM YYYY');
 
                 var dayOfWeek = (info.date).getDay();
@@ -384,12 +399,12 @@
 
     }
 
-    function addToCart (id_lapang, id_sesi, nama_lapang) {
+    function addToCart (id_lapang, id_sesi, nama_lapang, jam_mulai, jam_selesai) {
 
         $("#checkout-btn").show();
+        
         const id_booking = generate_id_booking( id_lapang, id_sesi, $('.dateSelected').val());
         const isWeekend = $('.isWeekend').val();
-        console.log(isWeekend);
         if (isWeekend == 'true') {
             var price = $(`#price-${id_lapang}-${id_sesi} .price-weekend`).text();
         } else {
@@ -397,29 +412,33 @@
         }
         var price = price.replace(/\,/g,'');
         price = parseInt(price);
-
-        const data = {
-            id_lapang: id_lapang,
-            id_sesi: id_sesi,
-            id_booking: id_booking,
-            nama_lapang: nama_lapang,
-            tanggal: $('.dateSelected').val(),
-            isWeekend: isWeekend,
-            price: price
+        const tanggal = $('.dateSelected').val();
+        if (tanggal == '' || tanggal == null){
+            alert('silahkan pilih tanggal terlebih dahulu');
+        } else {
+            const data = {
+                id_lapang: id_lapang,
+                id_sesi: id_sesi,
+                id_booking: id_booking,
+                nama_lapang: nama_lapang,
+                tanggal: tanggal,
+                isWeekend: isWeekend,
+                price: price,
+                jam_mulai: jam_mulai,
+                jam_selesai: jam_selesai
+            }
+    
+            // console.log(data);
+    
+            cart.push(data);
+            
+            $('.checkout').html("Checkout " + cart.length);
+    
+            $('#cart').val(JSON.stringify(cart));
+            $('#book-btn-'+id_lapang+'-'+id_sesi).hide();
+            $('#remove-btn-'+id_lapang+'-'+id_sesi).attr('onclick', "remove_cart('"+id_booking+"',"+id_lapang+","+id_sesi+")");
+            $('#remove-btn-'+id_lapang+'-'+id_sesi).show();
         }
-
-        console.log(data);
-
-        cart.push(data);
-        
-        $('.checkout').html("Checkout " + cart.length);
-
-        console.log(cart);
-
-        $('#cart').val(JSON.stringify(cart));
-        $('#book-btn-'+id_lapang+'-'+id_sesi).hide();
-        $('#remove-btn-'+id_lapang+'-'+id_sesi).attr('onclick', "remove_cart('"+id_booking+"',"+id_lapang+","+id_sesi+")");
-        $('#remove-btn-'+id_lapang+'-'+id_sesi).show();
     }
 
     function checkout () {
@@ -460,6 +479,12 @@
             $('.checkout').html("Checkout " + cart.length);
         else
             $('#checkout-btn').hide();
+    }
+
+    function jadwal () {
+        $.get('/jadwal', function (response) {
+            console.log(response);
+        })
     }
   
       </script>

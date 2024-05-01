@@ -35,7 +35,7 @@
                                 @foreach($order as $item)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$item->id_booking}}</td>
+                                    <td> {{$item->id}} </td>
                                     <td>
                                         @if($item->status_bayar == 1)
                                             <span class="bg-warning">Menunggu Konfirmasi</span>
@@ -47,7 +47,7 @@
                                     <td>Rp. {{number_format($item->diskon)}}</td>
                                     <td>Rp. {{number_format($item->total_harga - $item->diskon)}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" onclick="detail_order('{{$item->id_booking}}')" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                        <button type="button" class="btn btn-primary" onclick="detail_order('{{$item->id}}')" data-toggle="modal" data-target=".bd-example-modal-lg">
                                             Detail
                                         </button>
                                     </td>
@@ -81,7 +81,8 @@
                 url: '/order/detail/'+id,
                 type: 'GET',
                 success: function(response){
-                    console.log(response);
+                    var order_detail = response
+                    // console.log(response);
                     
 
                     $('.detail_order_id').text(id);
@@ -91,14 +92,17 @@
 
                     $('#listDetailOrder').html('');
                     var total = 0;
-                    response.forEach((item, index) => {
+                    var diskon = 0;
+                    order_detail.forEach((item, index) => {
+                        // console.log(item.order_detail);
                        total += parseInt(item.total_harga_sewa);
+                       diskon = item.order.diskon
                         $('#listDetailOrder').append(`
                             <tr>
                                 <td>${index+1}</td>
                                 <td>${item.lapangan.nama}</td>
                                 <td>${item.tgl_mulai}</td>
-                                <td>Sesi ${item.id_sesi} : Jam ${item.sesi.jam_mulai} - ${item.sesi.jam_selesai} </td>
+                                <td>Sesi ${item.id_sesi} : Jam ${item.sesi.jam_mulai} - ${item.sesi.jam_selesai}  </td>
                                 <td style="text-align: right;">Rp ${addCommas(item.total_harga_sewa) }</td>
                             </tr>
                             
@@ -115,11 +119,11 @@
                         </tr>
                         <tr>
                             <td colspan="4" class="text-end">Diskon</td>
-                            <td style="text-align: right;">Rp 0</td>
+                            <td style="text-align: right;">Rp ${addCommas(diskon)} </td>
                         </tr>
                         <tr>
                             <td colspan="4" class="text-end">Grand Total</td>
-                            <td style="text-align: right;">Rp ${addCommas(total)} </td>
+                            <td style="text-align: right;">Rp ${addCommas(total - diskon)} </td>
                         </tr>
                     `);
                 }

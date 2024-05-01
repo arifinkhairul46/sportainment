@@ -21,6 +21,8 @@ class OrderDetail extends Model
         'total_harga_sewa',
         'status_approval'
     ];
+    public $incrementing = false;
+
 
     public function order()
     {
@@ -39,14 +41,14 @@ class OrderDetail extends Model
 
     public static function get_all_order_detail()
     {
-        $data = static::with(['lapangan', 'sesi'])->get();
+        $data = static::with(['lapangan', 'sesi', 'order'])->get();
 
         return $data;
     }
 
     public static function get_detail_order_by_id($id)
     {
-        $data = static::with([ 'lapangan', 'sesi'])
+        $data = static::with([ 'lapangan', 'sesi', 'order'])
             ->where('id_booking', $id)
             ->get();
 

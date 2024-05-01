@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+    protected $primaryKey = 'id';
     protected $table = 't_sewa';
 
     protected $fillable = [
-        'id_booking',
+        'id',
         'id_user',
         'nama_penyewa',
         'no_hp',
@@ -25,6 +27,8 @@ class Order extends Model
 
     ];
 
+    public $incrementing = false;
+
     public function orderDetail()
     {
         return $this->hasMany(OrderDetail::class, 'id_booking');
@@ -33,6 +37,16 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id');
+    }
+
+    public function lapangan()
+    {
+        return $this->belongsTo(Lapangan::class, 'id_lapangan');
+    }
+
+    public function sesi()
+    {
+        return $this->belongsTo(Sesi::class, 'id_sesi');
     }
 
     public static function get_all ()
@@ -45,17 +59,18 @@ class Order extends Model
     public static function get_by_id ($id)
     {
         $data = Order::where('id_user', $id)->get();
+        // dd($data);
 
         return $data;
     }
 
     public static function get_by_id_detail ($id)
     {
-        $data = static::with(['orderDetail'])
-            ->where('id_booking', $id)
+        $data = static::with(['orderDetail', 'lapangan', 'sesi'])
+            ->where('id', $id)
             ->get();
 
-        return $data;
+        return $data[0];
     }
     
 }

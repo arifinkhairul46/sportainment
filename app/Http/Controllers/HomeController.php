@@ -82,16 +82,8 @@ class HomeController extends Controller
  
         // return $data;
         $data = json_decode($data, true);
-
         
-
-        foreach ($data as $value) {
-            $lapangan = Lapangan::get_lapangan($value['id_lapang']);
-            $sesi = Sesi::get_sesi($value['id_sesi']);
-        }
-
-        
-        return view('cart', compact('data', 'lapangan', 'sesi'));
+        return view('cart', compact('data'));
         
     }
 

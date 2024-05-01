@@ -25,18 +25,17 @@ class UserController extends Controller
 
             $user  = User::where('email', $request->email)->first();
 
-            if ($user->is_admin == '0') {
-                if (Hash::check($request->password, $user->password)) {
-                    $request->session()->regenerate();
-
-                    Auth::login($user);
-
-                    return redirect()->intended('/');
-                } 
-            } else {
+            if ($user->is_admin == '1') {
                 Auth::login($user);
                 return redirect()->intended('admin/dashboard');
-            }
+            } else {
+                if (Hash::check($request->password, $user->password)) {
+                    $request->session()->regenerate();
+                Auth::login($user);
+                return redirect()->intended('/');
+                }
+            } 
+
 
             return redirect("login")->withSuccess('Login details are not valid');
         } catch (\Exception $th) {
@@ -75,10 +74,10 @@ class UserController extends Controller
                 'no_hp' => $data['no_hp'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                // 'id_role' => $data['role'],
+                'is_admin' => '0'
             ]);
         } catch (\Exception $th) {
-            dd($th);
+            return redirect("register")->withError($th->getMessage());
         }
     }
 

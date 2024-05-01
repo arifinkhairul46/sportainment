@@ -53,7 +53,7 @@
                                 <tr id="{{$item['id_booking']}}">
                                     <td id="nama_lapang">{{$item['nama_lapang']}}</td>
                                     <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
-                                    <td>Sesi {{$item['id_sesi']}} <br> Jam </td>
+                                    <td class="text-sm">Sesi {{$item['id_sesi']}} <br>{{date('h:i', strtotime($item['jam_mulai'])) }} - {{date('h:i', strtotime($item['jam_selesai'])) }}</td>
                                     <td>Rp {{number_format($item['price'])}}</td>
                                     <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$idx}}','{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
                                 </tr>

@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
-        'no_hp'
+        'no_hp',
+        'is_admin',
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';
