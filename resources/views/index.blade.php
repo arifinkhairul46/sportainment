@@ -333,6 +333,23 @@
                 $('.price-weekend').show();
                 $('.price-weekday').hide();
             }
+        
+            $.ajax({
+                url: '/jadwal/' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+                type: 'GET',
+                success: function (response) {
+                    response.forEach(function (item) {
+                        // console.log(item);
+                        if (item.order) {
+                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
+                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekday').hide();
+                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekend').hide();
+                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
+                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
+                        }
+                    })
+                }
+            })
 
           var calendar = new FullCalendar.Calendar(calendarEl, 
           {
@@ -347,7 +364,6 @@
             },
             
             dateClick: function (info) {
-                console.log(info.dateStr);
                 
                 moment.locale('id');
                 var dateSelected = moment(info.dateStr).format('dddd, Do MMMM YYYY');
@@ -372,7 +388,7 @@
                 $('.remove-btn').hide();
                 //filter cart by date
                 cartByDate = cart.filter(data => data.tanggal === info.dateStr);
-                console.log('cartbydate',cartByDate);
+                // console.log('cartbydate',cartByDate);
                 //foreach item
                 cartByDate.forEach((data) => {
                     //set btn visibility
@@ -388,10 +404,8 @@
                     url: '/jadwal/' + info.dateStr,
                     type: 'GET',
                     success: function (response) {
-                        // console.log(response);
-                        // $('.jadwal').html('');
                         response.forEach(function (item) {
-                            console.log(item);
+                            // console.log(item);
                             if (item.order) {
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekday').hide();
@@ -399,7 +413,6 @@
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
                             }
-                            // $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item ? item.order.nama_penyewa : 'Available').addClass(item ? 'bg-danger text-white' : 'bg-success text-white');
                         })
                     }
                 })
@@ -419,8 +432,6 @@
     function generate_id_booking (lapang, sesi, tanggal) {
         const today = new Date(tanggal);
         const number = Math.floor(Math.random() * 1000);
-
-       
         
         const id_booking = "SAR" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + lapang + sesi + number;
 
@@ -439,6 +450,7 @@
         } else {
             var price = $(`#price-${id_lapang}-${id_sesi} .price-weekday`).text();
         }
+        var price = price.replace('Rp','');
         var price = price.replace(/\,/g,'');
         price = parseInt(price);
         const tanggal = $('.dateSelected').val();
@@ -460,7 +472,6 @@
             cart.push(data);
             
             $('.checkout').html("Checkout " + cart.length);
-            console.log(cart);
     
             $('#cart').val(JSON.stringify(cart));
             $('#book-btn-'+id_lapang+'-'+id_sesi).hide();
@@ -475,46 +486,21 @@
         _token: '{{ csrf_token() }}'
         },
         function (response) {
-            console.log(response);
-            // if (response.status == 'success') {
-            //     window.location.href = '/cart';
-            // } else {
-            //     alert('Gagal mengakses cart');
-            // }
         })
-        // $.ajax({
-        //     url: '/checkout',
-        //     type: 'POST',
-        //     data: {
-        //         "_token": "{{ csrf_token() }}",
-        //         cart: cart
-        //     },
-        //     success: function (response) {
-        //         if (response == 'sukses') {
-        //             window.location.href = '/cart';
-        //         }
-        //     }
-        // })
     }
 
     function remove_cart (id_booking, id_lapang, id_sesi) {
         cart = cart.filter(data => data.id_booking !== id_booking);
         $('#book-btn-'+id_lapang+'-'+id_sesi).show();
         $('#remove-btn-'+id_lapang+'-'+id_sesi).hide();
-        console.log(cart);
+
+        $('#cart').val(JSON.stringify(cart));
 
         if(cart.length>0)
             $('.checkout').html("Checkout " + cart.length);
         else
             $('#checkout-btn').hide();
     }
-
-    function jadwal () {
-        $.get('/jadwal', function (response) {
-            console.log(response);
-        })
-    }
-  
       </script>
 
 @endsection
