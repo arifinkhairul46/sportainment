@@ -24,6 +24,9 @@ class User extends Authenticatable
         'google_id',
         'no_hp',
         'is_admin',
+        'verification_code',
+        'is_verified',
+        'asal_instansi'
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';

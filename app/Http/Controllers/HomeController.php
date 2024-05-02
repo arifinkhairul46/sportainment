@@ -17,11 +17,12 @@ class HomeController extends Controller
         $artikel_show = Artikel::all();
         $list_lapangan = Lapangan::all();
         $sesi = Sesi::all();
-        $order_detail = OrderDetail::get_all_order_detail();
+        // $jadwal = OrderDetail::where('tgl_mulai', '2024-04-28')->get();
+        // dd($jadwal);        
         // dd($order_detail);        
 
 
-        return view('index', compact('artikel_show', 'list_lapangan', 'sesi', 'order_detail'));
+        return view('index', compact('artikel_show', 'list_lapangan', 'sesi'));
     }
 
     public function generate_id_booking() {

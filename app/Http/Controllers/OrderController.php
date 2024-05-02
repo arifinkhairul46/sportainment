@@ -181,6 +181,14 @@ class OrderController extends Controller
         return $order_detail;
     }
 
+    public function get_jadwal_per_hari($tgl) {
+        $jadwal = OrderDetail::jadwal_per_hari($tgl);
+        // dd($jadwal);        
+        
+        return $jadwal;
+
+    }
+
     function send_notif ($no_wha, $message) {
         $dataSending = array();
         $dataSending["api_key"] = "VDSVRW87NW812KD7";

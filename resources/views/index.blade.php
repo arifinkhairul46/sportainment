@@ -197,45 +197,38 @@
                                         </tr>
                                     </thead>
                                     <tbody class="jadwal">
-                                        {{-- @foreach ($order_detail as $order) --}}
-                                            @foreach ($sesi as $item)
-                                                <tr>
-                                                    <td class="col-md-3 col-6">Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
-                                                    <td class="col-md-3 col-6">
-                                                            {{-- @if ($order->id_lapangan == $lapang->id && $order->id_sesi == $item->sesi)
-                                                                <span class="badge bg-danger"> Booked </span>
-                                                            @else
-                                                                <span class="badge bg-success">Available</span>
-                                                            @endif --}}
-                                                    </td>
-                                                    <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
-                                                    Rp <b class="price-weekday" style="display: none">
-                                                        @if  ($item->sesi < 10 )
-                                                    {{number_format($lapang->harga_weekday_perjam_1)}}
-                                                        @else
-                                                    {{number_format($lapang->harga_weekday_perjam_2)}}
-                                                        @endif
-                                                    </b>
-                                                    <b class="price-weekend" style="display: none">
-                                                        @if ($item->sesi < 10 )
-                                                    {{number_format($lapang->harga_weekend_perjam_1)}}
-                                                        @else
-                                                    {{number_format($lapang->harga_weekend_perjam_2)}}
-                                                        @endif
-                                                    </b>
-                                                    </td>
-                                                    <td class="col-md-3 col-6">
-                                                        
-                                                        @if (Auth::check())
-                                                        <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}', '{{$item->jam_mulai}}', '{{$item->jam_selesai}}')" class="btn btn-sm btn-primary" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
-                                                        <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
-                                                        @else
-                                                        <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        {{-- @endforeach --}}
+                                        @foreach ($sesi as $item)
+                                            <tr class="lapang_sesi-{{$lapang->id}}-{{$item->sesi}}">
+                                                <td class="col-md-3 col-6" >Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
+                                                <td class="col-md-3 col-6 status" > TERSEDIA
+                                                </td>
+                                                <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
+                                                Rp <b class="price-weekday" style="display: none">
+                                                    @if  ($item->sesi < 10 )
+                                                {{number_format($lapang->harga_weekday_perjam_1)}}
+                                                    @else
+                                                {{number_format($lapang->harga_weekday_perjam_2)}}
+                                                    @endif
+                                                </b>
+                                                <b class="price-weekend" style="display: none">
+                                                    @if ($item->sesi < 10 )
+                                                {{number_format($lapang->harga_weekend_perjam_1)}}
+                                                    @else
+                                                {{number_format($lapang->harga_weekend_perjam_2)}}
+                                                    @endif
+                                                </b>
+                                                </td>
+                                                <td class="col-md-3 col-6">
+                                                    
+                                                    @if (Auth::check())
+                                                    <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}', '{{$item->jam_mulai}}', '{{$item->jam_selesai}}')" class="btn btn-sm btn-primary booking-btn" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
+                                                    <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
+                                                    @else
+                                                    <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -374,6 +367,24 @@
                 $('.resDate').html(dateSelected );
                 $('.dateSelected').val(info.dateStr);
 
+                $.ajax({
+                    url: '/jadwal/' + info.dateStr,
+                    type: 'GET',
+                    success: function (response) {
+                        // console.log(response);
+                        // $('.jadwal').html('');
+                        response.forEach(function (item) {
+                            console.log(item);
+                            if (item.order) {
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price').html('');
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
+                            }
+                            // $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item ? item.order.nama_penyewa : 'Available').addClass(item ? 'bg-danger text-white' : 'bg-success text-white');
+                        })
+                    }
+                })
 
             },
         });

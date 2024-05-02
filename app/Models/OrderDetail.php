@@ -55,5 +55,14 @@ class OrderDetail extends Model
         return $data;
     }
 
+    public static function jadwal_per_hari($tgl)
+    {
+        $data = static::with(['lapangan', 'sesi', 'order'])
+            ->where('tgl_mulai', $tgl)
+            ->get();
+
+        return $data;
+    }
+
 
 }

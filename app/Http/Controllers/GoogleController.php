@@ -33,6 +33,8 @@ class GoogleController extends Controller
                     'name' => $user->name,
                     'google_id' => $user->id,
                     'password' => Hash::make('password'),
+                    'is_admin' => 0,
+                    'is_verified' => 0
                 ]);
 
                 Auth::login($newUser);
