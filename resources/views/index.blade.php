@@ -198,19 +198,19 @@
                                     </thead>
                                     <tbody class="jadwal">
                                         @foreach ($sesi as $item)
-                                            <tr class="lapang_sesi-{{$lapang->id}}-{{$item->sesi}}">
+                                            <tr class="lapang_sesi-{{$lapang->id}}-{{$item->sesi}} list-jadwal">
                                                 <td class="col-md-3 col-6" >Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
                                                 <td class="col-md-3 col-6 status" > TERSEDIA
                                                 </td>
                                                 <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
-                                                Rp <b class="price-weekday" style="display: none">
+                                                 <b class="price-weekday" style="display: none"> Rp
                                                     @if  ($item->sesi < 10 )
                                                 {{number_format($lapang->harga_weekday_perjam_1)}}
                                                     @else
                                                 {{number_format($lapang->harga_weekday_perjam_2)}}
                                                     @endif
                                                 </b>
-                                                <b class="price-weekend" style="display: none">
+                                                <b class="price-weekend" style="display: none"> Rp
                                                     @if ($item->sesi < 10 )
                                                 {{number_format($lapang->harga_weekend_perjam_1)}}
                                                     @else
@@ -379,7 +379,9 @@
                     $('#book-btn-'+data.id_lapang+'-'+data.id_sesi).hide();
                     $('#remove-btn-'+data.id_lapang+'-'+data.id_sesi).show();
                 })
-                
+
+                $('.list-jadwal').removeClass('bg-offer');
+                $('.status').html('TERSEDIA');
 
                 $.ajax({
                     url: '/jadwal/' + info.dateStr,
@@ -391,7 +393,8 @@
                             console.log(item);
                             if (item.order) {
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price').html('');
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekday').hide();
+                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekend').hide();
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
                                 $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
                             }
