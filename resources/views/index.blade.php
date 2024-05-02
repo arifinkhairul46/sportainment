@@ -378,6 +378,7 @@
                     //set btn visibility
                     $('#book-btn-'+data.id_lapang+'-'+data.id_sesi).hide();
                     $('#remove-btn-'+data.id_lapang+'-'+data.id_sesi).show();
+                    $('#remove-btn-'+data.id_lapang+'-'+data.id_sesi).attr('onclick', "remove_cart('"+data.id_booking+"',"+data.id_lapang+","+data.id_sesi+")");
                 })
 
                 $('.list-jadwal').removeClass('bg-offer');
@@ -416,7 +417,7 @@
 
 
     function generate_id_booking (lapang, sesi, tanggal) {
-        const today = new Date();
+        const today = new Date(tanggal);
         const number = Math.floor(Math.random() * 1000);
 
        
@@ -456,11 +457,10 @@
                 jam_selesai: jam_selesai
             }
     
-            // console.log(data);
-    
             cart.push(data);
             
             $('.checkout').html("Checkout " + cart.length);
+            console.log(cart);
     
             $('#cart').val(JSON.stringify(cart));
             $('#book-btn-'+id_lapang+'-'+id_sesi).hide();
