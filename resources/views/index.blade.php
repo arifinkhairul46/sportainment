@@ -222,9 +222,9 @@
                                                     
                                                     @if (Auth::check())
                                                     <button onclick="addToCart('{{$lapang->id}}', '{{$item->sesi}}', '{{$lapang->nama}}', '{{$item->jam_mulai}}', '{{$item->jam_selesai}}')" class="btn btn-sm btn-primary booking-btn" id="book-btn-{{$lapang->id}}-{{$item->sesi}}"><i class="fas fa-shopping-cart"></i> Book Now</button>
-                                                    <button class="btn btn-sm btn-danger text-xs" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
+                                                    <button class="btn btn-sm btn-danger text-xs remove-btn" id="remove-btn-{{$lapang->id}}-{{$item->sesi}}" style="display: none"><i class="fas fa-trash" aria-hidden="true"></i> Remove</button>
                                                     @else
-                                                    <a href="{{route('login')}}" class="btn btn-sm btn-warning" style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
+                                                    <a href="{{route('login')}}" class="btn btn-sm btn-warning " style="font-size: 11px"><i class="fas fa-shopping-cart" aria-hidden="true"></i> Book Now (Sign!)</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -366,6 +366,20 @@
                 
                 $('.resDate').html(dateSelected );
                 $('.dateSelected').val(info.dateStr);
+
+                //show all book btn
+                $('.booking-btn').show();
+                $('.remove-btn').hide();
+                //filter cart by date
+                cartByDate = cart.filter(data => data.tanggal === info.dateStr);
+                console.log('cartbydate',cartByDate);
+                //foreach item
+                cartByDate.forEach((data) => {
+                    //set btn visibility
+                    $('#book-btn-'+data.id_lapang+'-'+data.id_sesi).hide();
+                    $('#remove-btn-'+data.id_lapang+'-'+data.id_sesi).show();
+                })
+                
 
                 $.ajax({
                     url: '/jadwal/' + info.dateStr,
