@@ -54,8 +54,10 @@ class OrderController extends Controller
         $dp = number_format(30/100 * $fix_total);
         $order = json_decode($order['data'], true);
 
-        
-        // return $no_hp;
+        if ($user->no_hp == null || $user->no_hp == '') {
+            return redirect()->route('profile')->with('error', 'Silahkan isi No HP yang terhubung dengan Whatsapp terlebih dahulu');
+        }
+
 
         $order_create = Order::create([
             'id' => $id_booking,
@@ -94,12 +96,12 @@ class OrderController extends Controller
 
         $message = "Terimakasih $user->name telah melakukan pemesanan di Area Sportainment. Berikut detailnya:
 
-        - Nama Penyewa: $user->name
-        - ID Order : $id_booking
-        - Hari, Tanggal : $order_detail->tgl_mulai
-        - Jam Mulai : $order_detail->jam_mulai
-        - Jam Selesai : $order_detail->jam_selesai
-        - Jenis Lapangan: $nama_lapangan
+    - Nama Penyewa: $user->name
+    - ID Order : $id_booking
+    - Hari, Tanggal : $order_detail->tgl_mulai
+    - Jam Mulai : $order_detail->jam_mulai
+    - Jam Selesai : $order_detail->jam_selesai
+    - Jenis Lapangan: $nama_lapangan
         
     Total Biaya Sewa = *Rp. $total_show,-*
     DP 30% = Rp. $dp,-

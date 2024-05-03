@@ -282,7 +282,7 @@
             <div class="row">
                 <div class="col-lg-6 pt-5">
                     <h1 class="txt-contact mb-4">CONTACT <br/>INFORMATION</h1>
-                    <p class="px-3 py-1" style="border: solid 2px #262626; border-radius: 5px; width:285px;"> sportainmentrabbani@gmail.com </p>
+                    <p class="px-2 py-1" style="border: solid 2px #262626; border-radius: 5px; width:285px;"> sportainmentrabbani@gmail.com </p>
                     <a href="https://wa.me/6285175375475" class="btn btn-black me-3 text-white">Whatsapp: +62 851-7537-5475</a>
                     <br>
                     <div class="mt-5 d-flex">

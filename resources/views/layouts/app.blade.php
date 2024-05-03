@@ -46,6 +46,35 @@
         </nav>
 
         <main>
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block">	
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
+      
+          @if ($message = Session::get('error'))
+            <div class="alert alert-danger alert-block">	
+              <strong>{{ $message }}</strong>
+            </div>
+          @endif
+      
+          @if ($message = Session::get('warning'))
+            <div class="alert alert-warning alert-block">	
+              <strong>{{ $message }}</strong>
+          </div>
+          @endif
+      
+          @if ($message = Session::get('info'))
+            <div class="alert alert-info alert-block">	
+              <strong>{{ $message }}</strong>
+            </div>
+          @endif
+      
+          @if ($errors->any())
+            <div class="alert alert-danger">	
+              Please check the form below for errors
+          </div>
+          @endif
             @yield('content')
         </main>
           
@@ -60,6 +89,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/noframework.waypoints.min.js" integrity="sha512-wSIyQnPXWUgUNlSYdZKmOt99+I9FPAW7kJHIzUM5VhSDmROIwVmB4s+i/9p1YliZIAcKqdEgUOhOwO8u4piaaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
     </div>
 </body>
 </html>
