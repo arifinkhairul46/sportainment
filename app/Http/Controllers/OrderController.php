@@ -111,7 +111,7 @@ class OrderController extends Controller
         
     Note: Booking DP minimal 30% dari total sewa dan akan di masukkan ke jadwal apabila sudah melakukan pembayaran dengan mengirimkan foto bukti transfer.";
 
-        $send_notif = $this->send_notif('087885293721', $message);
+        $send_notif = $this->send_notif($user->no_hp, $message);
 
         if ($send_notif) {
             return redirect()->route('order.index')->with('success', 'Booking berhasil');

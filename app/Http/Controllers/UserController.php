@@ -65,7 +65,7 @@ class UserController extends Controller
         if ($check) {
             $message = "Kode verifikasi anda adalah " . $check->verification_code;
             $no_wha = $check->no_hp;
-            $this->send_verification('087885293721', $message);
+            $this->send_verification($no_wha, $message);
         }
         // dd($check);
         
@@ -189,6 +189,4 @@ class UserController extends Controller
 
         return redirect("profile")->withSuccess('Profile updated successfully.');
     }
-
-    
 }
