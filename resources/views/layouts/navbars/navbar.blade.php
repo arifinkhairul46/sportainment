@@ -9,10 +9,10 @@
     <div class="collapse navbar-collapse" style="margin-right: 2rem" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="/" class="nav-item nav-link active">Home</a>
-            <a href="#about" class="nav-item nav-link">About</a>
-            <a href="#category" class="nav-item nav-link">Category</a>
-            <a href="#booking" class="nav-item nav-link">Booking</a>
-            <a href="#contact" class="nav-item nav-link">Contact</a>
+            <a onclick="clickAbout()" class="nav-item nav-link">About</a>
+            <a onclick="clickCategory()" class="nav-item nav-link">Category</a>
+            <a onclick="clickBooking()" class="nav-item nav-link">Booking</a>
+            <a onclick="clickContact()" class="nav-item nav-link">Contact</a>
             @if (Auth::check())
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link bg-secondary text-white px-3 dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i>{{' Hi, '}}{{ auth()->user()->name}}</a>
@@ -36,4 +36,38 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function clickAbout() {
+        if (window.location.pathname === '/') {
+            document.getElementById('about').scrollIntoView();
+        } else {
+            window.location.href = '/#about';
+        }
+    }
+
+    function clickCategory() {
+        if (window.location.pathname === '/') {
+            document.getElementById('category').scrollIntoView();
+        } else {
+            window.location.href = '/#category';
+        }
+    }
+
+    function clickBooking() {
+        if (window.location.pathname === '/') {
+            document.getElementById('booking').scrollIntoView();
+        } else {
+            window.location.href = '/#booking';
+        }
+    }
+
+    function clickContact() {
+        if (window.location.pathname === '/') {
+            document.getElementById('contact').scrollIntoView();
+        } else {
+            window.location.href = '/#contact';
+        }
+    }
+</script>
 <!-- Navbar End -->
