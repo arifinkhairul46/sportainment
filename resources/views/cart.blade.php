@@ -199,13 +199,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response){
-                    console.log(response);
-                    // if(response == 'success'){
-                    //     alert('Booking berhasil');
-                    //     location.href = '/history';
-                    // }else{
-                    //     alert('Booking gagal');
-                    // }
+                   
                 }
             });
         }

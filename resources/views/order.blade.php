@@ -86,15 +86,11 @@
                     
 
                     $('.detail_order_id').text(id);
-                    // $('.detail_disc_code').text(data.disc_code);
-                    // $('.detail_status').html('<span class="bg-warning text-white" style="padding:2px 5px 2px 5px;">'+data.status+'</span><br>');
-                    // $('.detail_order_add').text(data.created_at);
-
+                   
                     $('#listDetailOrder').html('');
                     var total = 0;
                     var diskon = 0;
                     order_detail.forEach((item, index) => {
-                        // console.log(item.order_detail);
                        total += parseInt(item.total_harga_sewa);
                        diskon = item.order.diskon
                         $('#listDetailOrder').append(`
@@ -107,8 +103,6 @@
                             </tr>
                             
                         `);
-
-
                     });
 
                     $('#listDetailOrder').append(`
