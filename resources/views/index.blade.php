@@ -198,8 +198,8 @@
                                     </thead>
                                     <tbody class="jadwal">
                                         @foreach ($sesi as $item)
-                                            <tr class="lapang_sesi-{{$lapang->id}}-{{$item->sesi}} list-jadwal">
-                                                <td class="col-md-3 col-6" >Sesi {{$item->sesi}} <br> <span><b>{{$item->jam_mulai}} - {{$item->jam_selesai}}</b></span> </td>
+                                            <tr class="lapang_sesi-{{$item->sesi}}-{{$lapang->id}} list-jadwal session-{{$item->sesi}}">
+                                                <td class="col-md-3 col-6" >Sesi {{$item->sesi}} <br> <span><b class="jam_mulai">{{$item->jam_mulai}}</b> - <b>{{$item->jam_selesai}}</b></span> </td>
                                                 <td class="col-md-3 col-6 status" > TERSEDIA
                                                 </td>
                                                 <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
@@ -333,23 +333,42 @@
                 $('.price-weekend').show();
                 $('.price-weekday').hide();
             }
+            
+            var current_time = moment().format('HH');
+
+            $.ajax({
+                url: '/sesi',
+                type: 'GET',
+                success: function (res) {
+                    res.forEach(function (item) {
+                        var jam_mulai = item.jam_mulai;
+                        jam_mulai = jam_mulai.split(':')[0];
+                        if (jam_mulai <= current_time) {
+                            $('.session-'+item.sesi).addClass('bg-offer');
+                            $('.session-'+item.sesi+' .price-weekday').hide();
+                            $('.session-'+item.sesi+' .price-weekend').hide();
+                            $('.session-'+item.sesi+' .booking-btn').hide();
+
+                        }
+                    })
+                }
+            })
         
             $.ajax({
                 url: '/jadwal/' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
                 type: 'GET',
                 success: function (response) {
                     response.forEach(function (item) {
-                        // console.log(item);
                         if (item.order) {
-                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
-                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekday').hide();
-                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekend').hide();
-                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
-                            $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
+                            $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan).addClass('bg-offer');
+                            $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .price-weekday').hide();
+                            $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .price-weekend').hide();
+                            $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .status').html(item.order.nama_penyewa);
+                            $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .booking-btn').hide();
                         }
                     })
                 }
-            })
+            });
 
           var calendar = new FullCalendar.Calendar(calendarEl, 
           {
@@ -367,7 +386,7 @@
                 
                 moment.locale('id');
                 var dateSelected = moment(info.dateStr).format('dddd, Do MMMM YYYY');
-
+                var today = moment(calendar.getDate()).format('yyyy-MM-DD');
                 var dayOfWeek = (info.date).getDay();
                 var isWeekend = (dayOfWeek === 0) || (dayOfWeek === 6)
                 
@@ -388,7 +407,6 @@
                 $('.remove-btn').hide();
                 //filter cart by date
                 cartByDate = cart.filter(data => data.tanggal === info.dateStr);
-                // console.log('cartbydate',cartByDate);
                 //foreach item
                 cartByDate.forEach((data) => {
                     //set btn visibility
@@ -405,13 +423,12 @@
                     type: 'GET',
                     success: function (response) {
                         response.forEach(function (item) {
-                            // console.log(item);
                             if (item.order) {
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi).addClass('bg-offer');
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekday').hide();
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .price-weekend').hide();
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .status').html(item.order.nama_penyewa);
-                                $('.lapang_sesi-'+item.id_lapangan+'-'+item.id_sesi+' .booking-btn').hide();
+                                $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan).addClass('bg-offer');
+                                $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .price-weekday').hide();
+                                $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .price-weekend').hide();
+                                $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .status').html(item.order.nama_penyewa);
+                                $('.lapang_sesi-'+item.id_sesi+'-'+item.id_lapangan+' .booking-btn').hide();
                             }
                         })
                     }

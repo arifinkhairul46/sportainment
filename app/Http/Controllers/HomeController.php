@@ -102,5 +102,10 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function all_sesi() {
+        $sesi = Sesi::all();
+        return $sesi;
+    }
+
     
 }

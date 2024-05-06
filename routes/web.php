@@ -28,6 +28,8 @@ Route::get('/booking/{id_lapang}/{id_sesi}', [HomeController::class, 'addToCart'
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 Route::post('cart', [HomeController::class, 'checkout'])->name('checkout');
 Route::post('cart/remove/{id}', [HomeController::class, 'remove_cart'])->name('remove_cart');
+Route::get('/sesi', [HomeController::class, 'all_sesi'])->name('sesi');
+
 
 Route::get('diskon', [DiskonController::class, 'show'])->name('diskon.show');
 
