@@ -6,7 +6,7 @@
     <title>Sportainment Rabbani</title>
 
     <!-- Favicon -->
-    <link href="{{asset ('img/favicon.ico')}}" rel="icon">
+    <link href="{{asset ('assets/img/logo-sportainment-bg.png')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">

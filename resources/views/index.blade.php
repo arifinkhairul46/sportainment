@@ -34,8 +34,8 @@
                     <img class="w-100" src="assets/img/hero-1.png" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase animated bounceInDown">Best Security Services</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Safe & Secure Home For Your Family</h1>
+                            <h5 class="text-white text-uppercase animated bounceInDown">Champions Keep Playing</h5>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Until They Get It Right</h1>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
             <div class="row gx-5">
                 <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
                     <div class="h-100">
-                        <img class="w-100 h-100 rounded wow zoomIn" data-wow-delay="0.3s" src="assets/img/about-us.jpg" style="object-fit: cover;">
+                        <img class="w-100 h-100 rounded wow zoomIn" data-wow-delay="0.3s" src="{{asset ('assets/img/about-us.jpg')}}" style="object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -347,6 +347,7 @@
                             $('.session-'+item.sesi).addClass('bg-offer');
                             $('.session-'+item.sesi+' .price-weekday').hide();
                             $('.session-'+item.sesi+' .price-weekend').hide();
+                            $('.session-'+item.sesi+' .status').html('TIDAK TERSEDIA');
                             $('.session-'+item.sesi+' .booking-btn').hide();
 
                         }
