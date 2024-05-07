@@ -27,7 +27,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="d-grid text-right col-md-12 mt-3">
-                    <a href=""
+                    <a href="{{route('artikel.create')}}"
                         class="btn btn-outline-primary btn-sm text-small text-xs mr-3"
                         style="padding-top:5px!important">
                         <i class="fa fa-plus"></i>

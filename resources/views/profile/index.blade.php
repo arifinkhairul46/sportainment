@@ -4,7 +4,12 @@
     <div class="container-fluid ">
         <img src="assets/img/img-order-page.png" alt="img-banner-profile" class="responsive" height="320">
     </div>
-    <div class="container">
+    <div class="container mt-3">
+        @if ($user->no_hp == null)
+        <div class="alert alert-danger alert-block" >
+            Mohon isi nomor handphone yang terhubung dengan Whatsapp anda terlebih dahulu.
+        </div>
+        @endif
         <div class="row mt-4">
             <div class="col-md-3">
                 <div class="card">
@@ -46,4 +51,9 @@
             </div>
         </div>
     </div>
+
+     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 @endsection

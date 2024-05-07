@@ -37,68 +37,74 @@
                 <hr class="mt-4 mb-0">
 
                 <div class="card-body mt-3">
-                    <table class="table cart" style="vertical-align:middle;">
-                        <thead>
-                            <tr>
-                                <th>Lapangan</th>
-                                <th>Tanggal</th>
-                                <th>Sesi</th>
-                                <th>Harga</th>
-                                <th class="col-sm-2">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="cart_list">
-                            <?php $total = 0; ?>
-                            @foreach($data as $idx => $item)
-                                <tr id="{{$item['id_booking']}}">
-                                    <td id="nama_lapang">{{$item['nama_lapang']}}</td>
-                                    <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
-                                    <td class="text-sm">Sesi {{$item['id_sesi']}} <br>{{date('h:i', strtotime($item['jam_mulai'])) }} - {{date('h:i', strtotime($item['jam_selesai'])) }}</td>
-                                    <td>Rp {{number_format($item['price'])}}</td>
-                                    <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$idx}}','{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
+                    <div class="table-responsive">
+                        <table class="table cart">
+                            <thead>
+                                <tr>
+                                    <th>Lapangan</th>
+                                    <th>Tanggal</th>
+                                    <th>Sesi</th>
+                                    <th>Harga</th>
+                                    <th class="col-sm-2">Action</th>
                                 </tr>
-                                <?php $total += $item['price']; ?>
-                            @endforeach
-                            <tr>
-                                <td colspan="3"><h6>Total Harga</h6></td>
-                                <td id="total_harga" colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="3">
-                                    <div class="form-group row">
-                                        <div class="col-xl-5 col-md-7 col-7">
-                                            <input type="text" class="form-control form-control-sm diskon" id="diskon" name="diskon" placeholder="Kode Diskon" >
+                            </thead>
+                            <tbody class="cart_list">
+                                <?php $total = 0; ?>
+                                @foreach($data as $idx => $item)
+                                    <tr id="{{$item['id_booking']}}">
+                                        <td id="nama_lapang">{{$item['nama_lapang']}}</td>
+                                        <td>{{date('d-m-Y', strtotime($item['tanggal'])) }}</td>
+                                        <td class="text-sm">Sesi {{$item['id_sesi']}} <br>{{date('h:i', strtotime($item['jam_mulai'])) }} - {{date('h:i', strtotime($item['jam_selesai'])) }}</td>
+                                        <td>Rp {{number_format($item['price'])}}</td>
+                                        <td><button class="btn btn-sm btn-danger text-xs" onclick="remove_cart('{{$idx}}','{{$item['id_booking']}}')" ><i class="fas fa-trash" aria-hidden="true"></i> Remove</button></td>
+                                    </tr>
+                                    <?php $total += $item['price']; ?>
+                                @endforeach
+                                <tr>
+                                    <td colspan="3"><h6>Total Harga</h6></td>
+                                    <td id="total_harga" colspan="2"><h6>Rp {{number_format($total)}} </h6></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="form-group row">
+                                            <div class="col-xl-5 col-md-7 col-7">
+                                                <input type="text" class="form-control form-control-sm diskon" id="diskon" name="diskon" placeholder="Kode Diskon" >
+                                            </div>
+                                            <div class="col-sm-3 col-3">
+                                                <button onclick="check_diskon()" class="btn btn-primary text-xs" >Apply</button>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3 col-3">
-                                            <button onclick="check_diskon()" class="btn btn-primary text-xs" >Apply</button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td colspan="2" id="rpdiskon">Rp 0 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <h6>Grand Total</h6>
-                                </td>
-                                <td colspan="2">
-                                    <h6 id="rptotal">Rp {{number_format($total)}}</h6>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="5" class="text-end">
-                                    <form action="{{route('booking.store')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="data" id="data" value="{{json_encode($data)}}">
-                                        <input type="hidden" name="fix_total" id="fix_total" value="{{$total}}">
-                                        <input type="hidden" name="fix_diskon" id="fix_diskon" value="0">
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td colspan="2" id="rpdiskon">Rp 0 </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h6>Grand Total</h6>
+                                    </td>
+                                    <td colspan="2">
+                                        <h6 id="rptotal">Rp {{number_format($total)}}</h6>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td colspan="5" class="text-end">
+                                        @if (auth()->user()->no_hp == null)
+                                            <a href="{{route('profile')}}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-money-bill-wave" aria-hidden="true" ></i> Booking</a>
+                                        @else
+                                        <form action="{{route('booking.store')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="data" id="data" value="{{json_encode($data)}}">
+                                            <input type="hidden" name="fix_total" id="fix_total" value="{{$total}}">
+                                            <input type="hidden" name="fix_diskon" id="fix_diskon" value="0">
+                                            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Booking</button>
+                                        </form>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div> 
@@ -110,8 +116,6 @@
         // console.log(arr_data);
 
         function remove_cart(idx, id_booking){
-            alert(id_booking);
-
             if(confirm('Are you sure want to remove this item?')){
                 $('#'+id_booking).remove();
                 arr_data = arr_data.filter(data => data.id_booking !== id_booking);

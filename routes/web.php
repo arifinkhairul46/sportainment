@@ -52,5 +52,7 @@ Route::controller(GoogleController::class)->group(function () {
 Route::prefix('admin')->group(function () {
     // Route::get('absensi', [DashboardController::class, 'index'])->('dashboard.absensi');
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard.absensi');
-    Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel');
+    Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+    Route::get('artikel-create', [ArtikelController::class, 'create'])->name('artikel.create');
+    Route::post('artikel-create', [ArtikelController::class, 'store'])->name('artikel.store');
 });
