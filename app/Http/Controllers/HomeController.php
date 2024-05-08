@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artikel;
 use App\Models\Diskon;
+use App\Models\JenisLapangan;
 use App\Models\Lapangan;
 use App\Models\OrderDetail;
 use App\Models\Sesi;
@@ -17,12 +18,13 @@ class HomeController extends Controller
         $artikel_show = Artikel::all();
         $list_lapangan = Lapangan::all();
         $sesi = Sesi::all();
+        $jenis_lapangan = JenisLapangan::all();
         // $jadwal = OrderDetail::where('tgl_mulai', '2024-04-28')->get();
         // dd($jadwal);        
         // dd($order_detail);        
 
 
-        return view('index', compact('artikel_show', 'list_lapangan', 'sesi'));
+        return view('index', compact('artikel_show', 'list_lapangan', 'sesi', 'jenis_lapangan'));
     }
 
     public function generate_id_booking() {

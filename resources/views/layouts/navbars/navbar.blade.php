@@ -11,7 +11,7 @@
             <a href="/" class="nav-item nav-link active">Home</a>
             <a onclick="clickAbout()" class="nav-item nav-link">About</a>
             <a onclick="clickCategory()" class="nav-item nav-link">Category</a>
-            <a onclick="clickBooking()" class="nav-item nav-link">Booking</a>
+            {{-- <a onclick="clickBooking()" class="nav-item nav-link">Booking</a> --}}
             <a onclick="clickContact()" class="nav-item nav-link">Contact</a>
             @if (Auth::check())
                 <div class="nav-item dropdown">

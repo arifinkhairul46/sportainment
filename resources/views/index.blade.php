@@ -110,30 +110,17 @@
                 <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Category</h5>
             </div>
             <div class="row g-5">
+                @foreach ($jenis_lapangan as $item)
                 <div class="col-lg-4">
                     <div class="bg-category">
-                        <h1 class="txt-contact text-center">Futsal</h1>
+                        <a href="{{route('lapangan.detail', $item->id_lapang)}}"><h1 class="txt-contact text-center"> {{$item->jenis_lapang}} </h1></a>
                     </div>
                     <br>
-                    <img src="assets/img/img-futsal.png" class="card-img-top" alt="photo futsal">
+                    <a href="{{route('lapangan.detail', $item->id_lapang)}}"><img src="{{$item->img_1}}" class="card-img-top" alt="photo {{$item->jenis_lapang}}"></a>
                 </div>
-                <div class="col-lg-4">
-                    <img src="assets/img/img-basketball.png" class="card-img-top" alt="photo basket">
-                    <br>
-                    <br>
-                    <div class="bg-category">
-                        <h1 class="txt-contact text-center">Basket</h1>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="bg-category">
-                        <h1 class="txt-contact text-center">Badminton</h1>
-                    </div>
-                    <br>
-                    <img src="assets/img/img-badminton.png" class="card-img-top" alt="photo badminton">
-                </div>
+                @endforeach
             </div>
-            <div class="row g-5 mt-4">
+            {{-- <div class="row g-5 mt-4">
                 <div class="col-lg-4">
                     <div class="bg-category">
                         <h1 class="txt-contact text-center">Memanah</h1>
@@ -156,14 +143,14 @@
                     <br>
                     <img src="assets/img/img-tenis-meja.png" class="card-img-top" alt="photo tenis-meja">
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- Gallery End -->
 
 
     <!-- Booking Start -->
-    <div class="container-fluid pt-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 50px;" id="booking">
+    <div class="container-fluid pt-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 50px; display: none" id="booking">
         <div class="container">
             <div class="text-center mx-auto mb-5" style="max-width: 600px;">
                 <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Booking</h5>
@@ -254,7 +241,7 @@
     <!-- Booking End -->
 
      <!-- Artikel Start -->
-     <div class="container-fluid py-3 wow fadeInUp" data-wow-delay="0.1s" id="artikel">
+     <div class="container-fluid py-3 wow fadeInUp" data-wow-delay="0.1s" id="artikel" style="display: none">
         <div class="container">
             <div class="text-center mx-auto mb-5" style="max-width: 600px;">
                 <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Artikel</h5>

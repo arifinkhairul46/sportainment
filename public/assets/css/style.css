@@ -429,4 +429,17 @@ footer {
   width: 100%;
   height: auto;
   max-height: 250px;
+  filter: brightness(0.4);
+}
+
+.responsive-detail {
+  width: 100%;
+  height: auto;
+  filter: brightness(0.4);
+}
+
+.centered {
+  position: absolute;
+  top: 100px;
+  left: 25px;
 }

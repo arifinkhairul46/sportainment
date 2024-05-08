@@ -17,4 +17,11 @@ class Lapangan extends Model
 
         return $data;
     }
+
+    public static function get_lapangan_by_id ($id)
+    {
+        $data = Lapangan::where('id', $id)->first();
+
+        return $data;
+    }
 }

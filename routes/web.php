@@ -5,6 +5,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::get('/sesi', [HomeController::class, 'all_sesi'])->name('sesi');
 
 
 Route::get('diskon', [DiskonController::class, 'show'])->name('diskon.show');
+
+Route::get('/lapangan/{id}', [LapanganController::class, 'show'])->name('lapangan.detail');
+
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::get('/jadwal/{tgl}' , [OrderController::class, 'get_jadwal_per_hari'])->name('jadwal');
