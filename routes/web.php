@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\GoogleController;
@@ -59,4 +60,8 @@ Route::prefix('admin')->group(function () {
     Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');
     Route::get('artikel-create', [ArtikelController::class, 'create'])->name('artikel.create');
     Route::post('artikel-create', [ArtikelController::class, 'store'])->name('artikel.store');
+
+    Route::get('approval', [ApprovalController::class, 'index'])->name('admin.approval');
+    Route::put('approval/{id}', [ApprovalController::class, 'update_setuju'])->name('admin.setuju');
+    Route::put('approval/reject/{id}', [ApprovalController::class, 'update_batal'])->name('admin.batal');
 });

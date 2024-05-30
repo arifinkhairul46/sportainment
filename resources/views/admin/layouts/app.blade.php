@@ -98,12 +98,18 @@
                         </p>
                         </a>
                         <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('artikel.index')}}" class="nav-link active">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Artikel</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{route('artikel.index')}}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Artikel</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.approval')}}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Approval</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     </ul>

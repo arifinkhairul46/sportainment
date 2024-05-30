@@ -69,29 +69,39 @@ class OrderController extends Controller
             'total_harga' => $fix_total,
             'diskon' => $diskon,
             'sisa_bayar' => $fix_total - $diskon,
-            'status_bayar' => 1,
+            'status_bayar' => 0,
             'status_approval' => 1
         ]);
 
+        //kirim api ke sipa_t_sewa_master
+        $send_api = $this->send_api_booking_master($id_booking, $user->name, $user->no_hp, $fix_total,1,0);
+
+
         foreach ($order as $item) {
             $order_detail = OrderDetail::create([
-                $id_sesi = Sesi::where('sesi', $item['id_sesi'])->first(),
+                $sesi = $item['id_sesi'],
+                $id_sesi = Sesi::where('sesi', $sesi)->first(),
                 $jam_mulai = $id_sesi->jam_mulai,
                 $jam_selesai = $id_sesi->jam_selesai,
-                $lapangan = Lapangan::where('id', $item['id_lapang'])->first(),
+                $id_lapangan = $item['id_lapang'],
+                $lapangan = Lapangan::where('id', $id_lapangan)->first(),
                 $nama_lapangan = $lapangan->nama,
+                $tgl_mulai =  $item['tanggal'],
+                $tgl_selesai =  $item['tanggal'],
 
                 'id_booking' => $id_booking,
-                'id_lapangan' => $item['id_lapang'],
-                'id_sesi' => $item['id_sesi'],
+                'id_lapangan' => $id_lapangan,
+                'id_sesi' => $sesi,
                 'jam_mulai' => $jam_mulai,
                 'jam_selesai' => $jam_selesai,
-                'tgl_mulai' => $item['tanggal'],
-                'tgl_selesai' => $item['tanggal'],
+                'tgl_mulai' => $tgl_mulai,
+                'tgl_selesai' => $tgl_selesai,
                 'total_harga_sewa' => $item['price'],
                 'status_approval' => 1
             ]);
 
+            //kirim api ke sipa_t_sewa
+            $send_api_detail = $this->send_data_booking_detail($id_booking,$item['price'], $jam_mulai, $jam_selesai, $tgl_mulai, $tgl_selesai, $id_lapangan);
         }
 
         $message = "Terimakasih $user->name telah melakukan pemesanan di Area Sportainment. Berikut detailnya:
@@ -99,7 +109,7 @@ class OrderController extends Controller
     - Nama Penyewa: $user->name
     - ID Order : $id_booking
     - Hari, Tanggal : $order_detail->tgl_mulai
-    - Jam Mulai : $order_detail->jam_mulai
+    - Jam Mulai : $jam_mulai
     - Jam Selesai : $order_detail->jam_selesai
     - Jenis Lapangan: $nama_lapangan
         
@@ -113,57 +123,13 @@ class OrderController extends Controller
         
     Note: Booking DP minimal 30% dari total sewa dan akan di masukkan ke jadwal apabila sudah melakukan pembayaran dengan mengirimkan foto bukti transfer.";
 
+        //kirim wa notif
         $send_notif = $this->send_notif($user->no_hp, $message);
 
         if ($send_notif) {
             return redirect()->route('order.index')->with('success', 'Booking berhasil');
         }
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Order $order)
-    {
-        //
     }
 
     public function detail($id)
@@ -218,4 +184,56 @@ class OrderController extends Controller
         return $response;
 
     }
+
+    function send_api_booking_master($id,$nama_penyewa,$no_hp,$total_harga,$status_approval,$status_bayar){
+	    $curl = curl_init();
+	    $url = "http://103.135.214.11:81/qlp_system/api_sipa/simpan_booking.php";
+
+	    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	    // curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($load_data) );
+		curl_setopt($curl, CURLOPT_POSTFIELDS, "id=".$id."&nama_penyewa=".$nama_penyewa."&no_hp=".$no_hp."&total_harga=".$total_harga."&status_approval=".$status_approval."&status_bayar=".$status_bayar);
+	    curl_setopt($curl, CURLOPT_URL, $url);
+	    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+	    $result = curl_exec($curl);
+	    curl_close($curl);
+
+	    // echo "<pre>";
+	    // return ($result);
+	}
+
+    function send_data_booking_detail($id, $total_harga, $jam_mulai, $jam_selesai, $tgl_mulai, $tgl_selesai, $id_lapangan){
+	    $curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => 'http://103.135.214.11:81/qlp_system/api_sipa/simpan_booking_detail.php',
+		  CURLOPT_RETURNTRANSFER => 1,
+		  CURLOPT_ENCODING => '',
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 0,
+		  CURLOPT_FOLLOWLOCATION => true,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => 'POST',
+		  // CURLOPT_SSL_VERIFYPEER => false,
+		  // CURLOPT_SSL_VERIFYHOST => false,
+		  CURLOPT_POSTFIELDS => array(
+		  	'id' => $id,
+		  	'total_harga' => $total_harga,
+		  	'jam_mulai' => $jam_mulai,
+			'jam_selesai' => $jam_selesai,
+			'tgl_mulai' => $tgl_mulai,
+			'tgl_selesai' => $tgl_selesai,
+			'id_lapangan' => $id_lapangan)
+
+		));
+
+		$response = curl_exec($curl);
+
+		// echo $response;
+		curl_close($curl);
+	    // return ($response);
+	}
+
+
 }

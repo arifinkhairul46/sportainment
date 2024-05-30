@@ -23,7 +23,9 @@ class Order extends Model
         'diskon',
         'sisa_bayar',
         'status_bayar',
-        'status_approval'
+        'status_approval',
+        'approved_by',
+        'updated_by',
 
     ];
 
@@ -71,6 +73,14 @@ class Order extends Model
             ->get();
 
         return $data[0];
+    }
+
+    public static function get_order_with_detail () {
+        $data = static::with('orderDetail')
+                ->where('status_approval', 1)
+                ->get();
+
+        return $data;
     }
     
 }

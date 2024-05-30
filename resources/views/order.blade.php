@@ -37,10 +37,10 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td> {{$item->id}} </td>
                                     <td>
-                                        @if($item->status_bayar == 1)
+                                        @if($item->status_bayar == 0)
                                             <span class="bg-warning">Menunggu Konfirmasi</span>
-                                        @elseif($item->status_bayar == 2)
-                                            <span class="bg-success">Pembayaran Diterima</span>
+                                        @elseif($item->status_bayar == 1)
+                                            <span class="bg-success text-white">Pembayaran Diterima</span>
                                         @endif
                                     </td>
                                     <td>Rp. {{number_format($item->total_harga)}}</td>
