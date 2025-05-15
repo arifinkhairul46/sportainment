@@ -80,7 +80,7 @@
                                                 <td class="col-md-3 col-6 status" > TERSEDIA
                                                 </td>
                                                 <td class="price col-md-3 col-6" id="price-{{$lapang->id}}-{{$item->sesi}}"> 
-                                                 <b class="price-weekday" style="display: none"> Rp
+                                                 {{-- <b class="price-weekday" style="display: none"> Rp
                                                     @if  ($item->sesi < 10 )
                                                 {{number_format($lapang->harga_weekday_perjam_1)}}
                                                     @else
@@ -93,7 +93,7 @@
                                                     @else
                                                 {{number_format($lapang->harga_weekend_perjam_2)}}
                                                     @endif
-                                                </b>
+                                                </b> --}}
                                                 </td>
                                                 <td class="col-md-3 col-6">
                                                     
